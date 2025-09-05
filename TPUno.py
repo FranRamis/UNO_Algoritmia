@@ -345,4 +345,4 @@ def iniciar_juego():
 iniciar_juego()
 
 def Cartas_Basicas() #Cartas basicas con valores numericos en matrices 
-
+def Reparto() #Descuento las cartas del mazo, solucionar el tema probabilistica
