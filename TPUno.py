@@ -344,5 +344,6 @@ def iniciar_juego():
 
 iniciar_juego()
 
-def Cartas_Basicas() #Cartas basicas con valores numericos en matrices 
-def Reparto() #Descuento las cartas del mazo, solucionar el tema probabilistica
+def Cartas_Basicas() #Cartas basicas con valores numericos en matrices.
+def Reparto() #Descuento las cartas del mazo, solucionar el tema probabilistica.
+def Cambio_de_jugador() #Agrega la funcion de la carta que cambia la el orden de juego invirtiendolo.
