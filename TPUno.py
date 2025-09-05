@@ -343,3 +343,6 @@ def iniciar_juego():
         input("\nPresione Enter para continuar...")
 
 iniciar_juego()
+
+def Cartas_Basicas() #Cartas basicas con valores numericos en matrices 
+
