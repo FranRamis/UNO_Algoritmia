@@ -344,7 +344,28 @@ def iniciar_juego():
 
 iniciar_juego()
 
-def Cartas_Basicas() #Cartas basicas con valores numericos en matrices.
+def Mazo_Uno():
+    colores = ["Rojo", "Amarillo", "Verde", "Azul"]
+    mazo = []
+
+    for color in colores:
+
+        for n in range(0, 10):
+            mazo.append([color, "Numero", n])
+            mazo.append([color, "Numero", n])
+
+        for _ in range(2):
+            mazo.append([color, "Bloqueo", None])
+            mazo.append([color, "Reversa", None])
+            mazo.append([color, "Toma2", None])
+
+    for _ in range(4):
+        mazo.append(["Negro", "Toma+4", None])
+        mazo.append(["Negro", "Cambio_Color", None])
+
+    return mazo 
+'''
 def Reparto() #Descuento las cartas del mazo, solucionar el tema probabilistica.
 def Cambio_de_jugador() #Agrega la funcion de la carta que cambia la el orden de juego invirtiendolo.
 def sistema_juego_mas2_mas4(): #Aplica el efecto de las cartas especiales +2 y +4. Obliga al jugador rival a tomar cartas y perder su turno
+'''
