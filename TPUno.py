@@ -5,11 +5,6 @@ import msvcrt  # Para captura de teclas en Windows
 from colorama import init, Fore, Style  
 init(autoreset=True)
 
-mazo = [[1,"ROJO"], [2,"ROJO"], [3,"ROJO"],[4,"ROJO"],[5,"ROJO"],[6,"ROJO"],[7,"ROJO"],[8,"ROJO"],[9,"ROJO"],[0,"ROJO"], ["+2","ROJO"], ["BLOQUEO", "ROJO"],
-        [1,"AZUL"], [2,"AZUL"], [3,"AZUL"],[4,"AZUL"],[5,"AZUL"],[6,"AZUL"],[7,"AZUL"],[8,"AZUL"],[9,"AZUL"],[0,"AZUL"], ["+2","AZUL"], ["BLOQUEO", "AZUL"],
-        [1,"VERDE"], [2,"VERDE"], [3,"VERDE"],[4,"VERDE"],[5,"VERDE"],[6,"VERDE"],[7,"VERDE"],[8,"VERDE"],[9,"VERDE"],[0,"VERDE"], ["+2","VERDE"], ["BLOQUEO", "VERDE"],
-        [1,"AMARILLO"], [2,"AMARILLO"], [3,"AMARILLO"],[4,"AMARILLO"],[5,"AMARILLO"],[6,"AMARILLO"],[7,"AMARILLO"],[8,"AMARILLO"],[9,"AMARILLO"],[0,"AMARILLO"], ["+2","AMARILLO"], ["BLOQUEO", "AMARILLO"]]
-
 mazoPC = []
 mazoUsuario = []
 cartaEnJuego = []
@@ -22,7 +17,26 @@ jugadores = [
     ["vera", 45],
     ["lu", 30]
 ]
+def Mazo_Uno():
+    colores = ["Rojo", "Amarillo", "Verde", "Azul"]
+    mazo = []
 
+    for color in colores:
+
+        for n in range(0, 10):
+            mazo.append([color, n])
+            mazo.append([color, n])
+
+        for _ in range(2):
+            mazo.append([color, "BLOQUEO"])
+            mazo.append([color, "Reversa"])
+            mazo.append([color, "+2"])
+
+    for _ in range(4):
+        mazo.append(["Negro", "+4"])
+        mazo.append(["Negro", "Cambio_Color"])
+
+    return mazo 
 def repartir(cant,mazo):
      lista = []
      while cant > 0 :
@@ -51,7 +65,7 @@ def validarCarta(cartaEnJuego, cartaUsuario):
     check = False
     if cartaEnJuego[0] == cartaUsuario[0] or cartaEnJuego[1] == cartaUsuario[1]:
         check = True
-    elif (cartaUsuario[0] in ["+2", "BLOQUEO"]) and cartaEnJuego[1] == cartaUsuario[1]:
+    elif (cartaUsuario[0] in ["+2", "BLOQUEO", "Reversa"]) and cartaEnJuego[1] == cartaUsuario[1]:
         check = True
     return check
 
@@ -263,6 +277,7 @@ def iniciar_juego():
     input("Presione Enter para continuar...")
     
     while menu():
+        mazo=Mazo_Uno()
         mazoPC = repartir(7, mazo)
         mazoUsuario = repartir(7, mazo)
         cartaEnJuego = repartir(1, mazo)[0]
@@ -312,24 +327,38 @@ def iniciar_juego():
                 efecto_pendiente = None
                 input("\nPresione Enter para continuar...")
                 continue
+            elif efecto_pendiente == "Reversa":
+                if turno == 0:
+                    print("¡Reversa! Se va para atras")
+                    turno = 1
+                else:
+                    print("¡Reversa! Se va para atras")
+                    turno = 0
+                efecto_pendiente = None
+                input("\nPresione Enter para continuar...")
+                continue
 
             # Turnos normales
             if turno == 0:
                 cartaEnJuego, mazoUsuario = turnoUsuario(mazoUsuario, mazo, cartaEnJuego)
                 # Detectar si la carta jugada es +2 o BLOQUEO para activar efecto
-                if cartaEnJuego[0] == "+2":
+                if cartaEnJuego[1] == "+2":
                     efecto_pendiente = "MAS2"
-                elif cartaEnJuego[0] == "BLOQUEO":
+                elif cartaEnJuego[1] == "BLOQUEO":
                     efecto_pendiente = "BLOQUEO"
+                elif cartaEnJuego[1] == "Reversa":
+                    efecto_pendiente = "Reversa"
                 turno = 1
 
             else:
                 cartaEnJuego, mazoPC = turnoPC(mazoPC, mazo, cartaEnJuego)
                 # Detectar si la carta jugada es +2 o BLOQUEO para activar efecto
-                if cartaEnJuego[0] == "+2":
+                if cartaEnJuego[1] == "+2":
                     efecto_pendiente = "MAS2"
-                elif cartaEnJuego[0] == "BLOQUEO":
+                elif cartaEnJuego[1] == "BLOQUEO":
                     efecto_pendiente = "BLOQUEO"
+                elif cartaEnJuego[1] == "Reversa":
+                    efecto_pendiente = "Reversa"
                 turno = 0
 
         # Final del juego
@@ -344,26 +373,6 @@ def iniciar_juego():
 
 iniciar_juego()
 
-def Mazo_Uno():
-    colores = ["Rojo", "Amarillo", "Verde", "Azul"]
-    mazo = []
-
-    for color in colores:
-
-        for n in range(0, 10):
-            mazo.append([color, "Numero", n])
-            mazo.append([color, "Numero", n])
-
-        for _ in range(2):
-            mazo.append([color, "Bloqueo", None])
-            mazo.append([color, "Reversa", None])
-            mazo.append([color, "Toma2", None])
-
-    for _ in range(4):
-        mazo.append(["Negro", "Toma+4", None])
-        mazo.append(["Negro", "Cambio_Color", None])
-
-    return mazo 
 '''
 def Reparto() #Descuento las cartas del mazo, solucionar el tema probabilistica.
 def Cambio_de_jugador() #Agrega la funcion de la carta que cambia la el orden de juego invirtiendolo.
