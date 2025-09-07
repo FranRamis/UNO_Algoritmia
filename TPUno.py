@@ -65,7 +65,7 @@ def validarCarta(cartaEnJuego, cartaUsuario):
     check = False
     if cartaEnJuego[0] == cartaUsuario[0] or cartaEnJuego[1] == cartaUsuario[1]:
         check = True
-    elif (cartaUsuario[0] in ["+2", "BLOQUEO", "Reversa"]) and cartaEnJuego[1] == cartaUsuario[1]:
+    elif (cartaUsuario[0] in ["+2", "BLOQUEO", "Reversa", "+4"]) and cartaEnJuego[1] == cartaUsuario[1]:
         check = True
     return check
 
@@ -217,7 +217,8 @@ def reglas():
     print("4. Si no tenes una carta válida, tenes que tomar una carta del mazo")
     print("5. La carta de bloqueo le roba el turno al jugador contrincante")
     print("6. La carta +2 indica que el jugador contrincante deberá tomar dos cartas del mazo y perderá el turno")
-    print("7. El primer jugador en quedarse sin cartas gana")
+    print("7. La carta +4 indica que el jugador contrincante deberá tomar cuatro cartas del mazo y perderá el turno")
+    print("8. El primer jugador en quedarse sin cartas gana")
     input("\nPresione Enter para continuar...")
 
 def ranking():
@@ -316,6 +317,18 @@ def iniciar_juego():
                 efecto_pendiente = None
                 input("\nPresione Enter para continuar...")
                 continue
+            if efecto_pendiente == "MAS4":
+                if turno == 0:
+                    print("¡Efecto +4! El jugador toma 4 cartas y pierde el turno.")
+                    mazoUsuario += repartir(4, mazo)
+                    turno = 1
+                else:
+                    print("¡Efecto +4! La computadora toma 4 cartas y pierde el turno.")
+                    mazoPC += repartir(4, mazo)
+                    turno = 0
+                efecto_pendiente = None
+                input("\nPresione Enter para continuar...")
+                continue
 
             elif efecto_pendiente == "BLOQUEO":
                 if turno == 0:
@@ -344,6 +357,8 @@ def iniciar_juego():
                 # Detectar si la carta jugada es +2 o BLOQUEO para activar efecto
                 if cartaEnJuego[1] == "+2":
                     efecto_pendiente = "MAS2"
+                elif cartaEnJuego[1] == "+4":
+                    efecto_pendiente = "MAS4"
                 elif cartaEnJuego[1] == "BLOQUEO":
                     efecto_pendiente = "BLOQUEO"
                 elif cartaEnJuego[1] == "Reversa":
@@ -355,6 +370,8 @@ def iniciar_juego():
                 # Detectar si la carta jugada es +2 o BLOQUEO para activar efecto
                 if cartaEnJuego[1] == "+2":
                     efecto_pendiente = "MAS2"
+                elif cartaEnJuego[1] == "+4":
+                    efecto_pendiente = "MAS4"
                 elif cartaEnJuego[1] == "BLOQUEO":
                     efecto_pendiente = "BLOQUEO"
                 elif cartaEnJuego[1] == "Reversa":
