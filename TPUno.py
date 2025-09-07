@@ -1,4 +1,3 @@
-# UNO_Algoritmia[TPO UNO -- Grupo 2.py](https://github.com/user-attachments/files/22163156/TPO.UNO.--.Grupo.2.py)
 import random
 import os
 import msvcrt  # Para captura de teclas en Windows
