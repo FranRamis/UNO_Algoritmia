@@ -4,10 +4,6 @@ import msvcrt  # Para captura de teclas en Windows
 from colorama import init, Fore, Style  
 init(autoreset=True)
 
-mazoPC = []
-mazoUsuario = []
-cartaEnJuego = []
-
 jugadores = [
     ["bruno", 70],
     ["mar", 65],
@@ -16,33 +12,47 @@ jugadores = [
     ["vera", 45],
     ["lu", 30]
 ]
+
 def Mazo_Uno():
-    colores = ["Rojo", "Amarillo", "Verde", "Azul"]
+    colores = ["ROJO", "AMARILLO", "VERDE", "AZUL"]
     mazo = []
 
     for color in colores:
-
         for n in range(0, 10):
             mazo.append([color, n])
             mazo.append([color, n])
 
         for _ in range(2):
             mazo.append([color, "BLOQUEO"])
-            mazo.append([color, "Reversa"])
+            mazo.append([color, "REVERSA"])
             mazo.append([color, "+2"])
 
     for _ in range(4):
-        mazo.append(["Negro", "+4"])
-        mazo.append(["Negro", "Cambio_Color"])
+        mazo.append(["NEGRO", "+4"])
+        mazo.append(["NEGRO", "CAMBIO_COLOR"])
 
     return mazo 
-def repartir(cant,mazo):
-     lista = []
-     while cant > 0 :
-        lista.append(mazo[random.randint(0, len(mazo)-1)])
-        cant= cant -1
-     return lista
 
+# Nueva función de repartir con mazo de reparto y descarte
+def repartir(cant, mazo_reparto, mazo_descarte):
+    lista = []
+    for i in range(cant):
+        if len(mazo_reparto) == 0:
+            # Reciclar mazo: tomar todas las cartas descartadas menos la última
+            if len(mazo_descarte) > 1:
+                ultima_carta = mazo_descarte[-1]
+                mazo_reparto = mazo_descarte[:-1]
+                random.shuffle(mazo_reparto)
+                mazo_descarte = [ultima_carta]
+            else:
+                print("No hay cartas para reciclar!")
+                break
+        # Sacar carta aleatoria del mazo de reparto
+        carta = mazo_reparto.pop(random.randint(0, len(mazo_reparto)-1))
+        lista.append(carta)
+    return lista, mazo_reparto, mazo_descarte
+
+# Función para mostrar el mazo
 def mostrarMazo(mazo):
     for i in range(len(mazo)):
         carta = mazo[i]
@@ -64,13 +74,11 @@ def validarCarta(cartaEnJuego, cartaUsuario):
     check = False
     if cartaEnJuego[0] == cartaUsuario[0] or cartaEnJuego[1] == cartaUsuario[1]:
         check = True
-    elif (cartaUsuario[0] in ["+2", "BLOQUEO", "Reversa", "+4"]) and cartaEnJuego[1] == cartaUsuario[1]:
+    elif (cartaUsuario[0] in ["+2", "BLOQUEO", "REVERSA", "+4"]) and cartaEnJuego[1] == cartaUsuario[1]:
         check = True
     return check
 
-# Nueva función para selección con flechas
-from colorama import Fore, Style
-
+# función para selección con flechas
 def seleccionar_con_flechas(mazo, msgOpcion0, cartaEnJuego):
     indice = 0
     while True:
@@ -119,49 +127,49 @@ def seleccionar_con_flechas(mazo, msgOpcion0, cartaEnJuego):
         elif tecla == b'0':
             return 0
 
-
-def turnoUsuario (mazoUsuario, mazoGeneral, cartaEnJuego):
+def turnoUsuario(mazoUsuario, mazo_reparto, mazo_descarte, cartaEnJuego):
     salir = False
     tomoUnaCarta = False
     opcion = -1
     msgOpcion0 = "0  -> Tomar una carta"
     print("es tu turno! Elegí una opcion o carta del mazo para jugar!")
-    while salir == False :
-      opcion = seleccionar_con_flechas(mazoUsuario, msgOpcion0, cartaEnJuego)
-      if opcion < 0 or opcion > len(mazoUsuario):
-           print ("opcion no valida!")
-      elif opcion == 0 and tomoUnaCarta == False:
-          print ( "el usuario toma una carta" )
-          mazoUsuario = mazoUsuario + repartir(1,mazoGeneral)
-          tomoUnaCarta = True
-          msgOpcion0 = "0  -> Pasar turno"
-      elif opcion == 0 and tomoUnaCarta == True :
-          salir = True
-          opcion = -1
-      else :
-          opcion = opcion-1
-          if(validarCarta(cartaEnJuego, mazoUsuario[opcion])):
-              cartaEnJuego = mazoUsuario[opcion]
-              del mazoUsuario[opcion]
-              salir = True
-          else:
-              print("No es una carta valida.")
-              numero, color = cartaEnJuego
-              if color == "ROJO":
-                  color_print = Fore.RED
-              elif color == "AZUL":
-                  color_print = Fore.BLUE
-              elif color == "VERDE":
+    while not salir:
+        opcion = seleccionar_con_flechas(mazoUsuario, msgOpcion0, cartaEnJuego)
+        if opcion < 0 or opcion > len(mazoUsuario):
+            print("opcion no valida!")
+        elif opcion == 0 and not tomoUnaCarta:
+            print("El usuario toma una carta")
+            nueva_carta, mazo_reparto, mazo_descarte = repartir(1, mazo_reparto, mazo_descarte)
+            mazoUsuario += nueva_carta
+            tomoUnaCarta = True
+            msgOpcion0 = "0  -> Pasar turno"
+        elif opcion == 0 and tomoUnaCarta:
+            salir = True
+            opcion = -1
+        else:
+            opcion = opcion - 1
+            if validarCarta(cartaEnJuego, mazoUsuario[opcion]):
+                cartaEnJuego = mazoUsuario[opcion]
+                mazo_descarte.append(cartaEnJuego)  # mover al mazo de descarte
+                del mazoUsuario[opcion]
+                salir = True
+            else:
+                print("No es una carta valida.")
+                numero, color = cartaEnJuego
+                if color == "ROJO":
+                    color_print = Fore.RED
+                elif color == "AZUL":
+                    color_print = Fore.BLUE
+                elif color == "VERDE":
                     color_print = Fore.GREEN
-              elif color == "AMARILLO":
-                  color_print = Fore.YELLOW
-              else:
-                color_print = Style.RESET_ALL
-
+                elif color == "AMARILLO":
+                    color_print = Fore.YELLOW
+                else:
+                    color_print = Style.RESET_ALL
                 print(f"\nLa carta en juego es: {color_print}{numero} {color}{Style.RESET_ALL}")
-    return cartaEnJuego, mazoUsuario
+    return cartaEnJuego, mazoUsuario, mazo_reparto, mazo_descarte
 
-def turnoPC(mazoPC, mazoGeneral, cartaEnJuego):
+def turnoPC(mazoPC, mazo_reparto, mazo_descarte, cartaEnJuego):
     print("\nTurno de la computadora...")
     jugada_valida = False
     i = 0
@@ -169,6 +177,7 @@ def turnoPC(mazoPC, mazoGeneral, cartaEnJuego):
     while i < len(mazoPC) and not jugada_valida:
         if validarCarta(cartaEnJuego, mazoPC[i]):
             cartaEnJuego = mazoPC[i]
+            mazo_descarte.append(cartaEnJuego)
             numero, color = cartaEnJuego
             if color == "ROJO":
                 color_print = Fore.RED
@@ -186,19 +195,20 @@ def turnoPC(mazoPC, mazoGeneral, cartaEnJuego):
         else:
             i += 1
 
-    if jugada_valida==False:
+    if not jugada_valida:
         print("La computadora no tiene cartas válidas. Toma una carta...")
-        nueva_carta = repartir(1, mazoGeneral)[0]
-       
-        if validarCarta(cartaEnJuego, nueva_carta):
-            cartaEnJuego = nueva_carta
-            print("¡La computadora jugó la carta que tomó! ", cartaEnJuego[0],cartaEnJuego[1])
+        nueva_carta, mazo_reparto, mazo_descarte = repartir(1, mazo_reparto, mazo_descarte)
+        carta = nueva_carta[0]
+        if validarCarta(cartaEnJuego, carta):
+            cartaEnJuego = carta
+            mazo_descarte.append(carta)
+            print("¡La computadora jugó la carta que tomó! ", cartaEnJuego[0], cartaEnJuego[1])
         else:
-            mazoPC.append(nueva_carta)
+            mazoPC.append(carta)
             print("La computadora no pudo jugar. Pasa el turno.")
 
     input("\nPresione Enter para continuar...")
-    return cartaEnJuego, mazoPC
+    return cartaEnJuego, mazoPC, mazo_reparto, mazo_descarte
 
 def registrar_usuario():
     print("\n=== REGISTRO DE USUARIO ===")
@@ -222,22 +232,9 @@ def reglas():
 
 def ranking():
     print("\n=== RANKING DE JUGADORES ===")
-    ranking_ordenado = []
-    for jugador in jugadores:
-        ranking_ordenado.append(jugador)
-    
-    # Ordenar la lista usando el método burbuja
-    for i in range(len(ranking_ordenado)):
-        for j in range(len(ranking_ordenado)-1):
-            if ranking_ordenado[j][1] < ranking_ordenado[j+1][1]:
-                temp = ranking_ordenado[j]
-                ranking_ordenado[j] = ranking_ordenado[j+1]
-                ranking_ordenado[j+1] = temp
-    
-    # Mostrar el ranking
-    for i in range(len(ranking_ordenado)):
-        print(f"{i+1}. {ranking_ordenado[i][0]}: {ranking_ordenado[i][1]} puntos")
-    
+    ranking_ordenado = sorted(jugadores, key=lambda x: x[1], reverse=True)
+    for i, j in enumerate(ranking_ordenado):
+        print(f"{i+1}. {j[0]}: {j[1]} puntos")
     input("\nPresione Enter para continuar...")
 
 def actualizar_puntuacion(nombre, puntos):
@@ -271,47 +268,50 @@ def menu():
             print("\nOpción no válida")
             input("Presione Enter para continuar...")
 
+# ================== Juego principal ==================
 def iniciar_juego():
     nombre_usuario = registrar_usuario()
     print(f"\n¡Bienvenido {nombre_usuario}!")
     input("Presione Enter para continuar...")
-    
+
     while menu():
-        mazo=Mazo_Uno()
-        mazoPC = repartir(7, mazo)
-        mazoUsuario = repartir(7, mazo)
-        cartaEnJuego = repartir(1, mazo)[0]
+        mazo_general = Mazo_Uno() # Mazo original
+        mazo_reparto = mazo_general.copy() # Copio el original para modificarlo
+        random.shuffle(mazo_reparto) # Barajo el mazo a repartir
+        mazo_descarte = [] #genero un mazo para descartar cartas vacio.
+
+        mazoUsuario, mazo_reparto, mazo_descarte = repartir(7, mazo_reparto, mazo_descarte)
+        mazoPC, mazo_reparto, mazo_descarte = repartir(7, mazo_reparto, mazo_descarte)
+        cartaEnJuego, mazo_reparto, mazo_descarte = repartir(1, mazo_reparto, mazo_descarte)
+        cartaEnJuego = cartaEnJuego[0]
+
         turno = 0  # 0 = Usuario, 1 = PC
-        efecto_pendiente = None  # Para controlar el efecto de +2 o BLOQUEO
+        efecto_pendiente = None
 
         while len(mazoPC) > 0 and len(mazoUsuario) > 0:
             os.system('cls')
             print(f"\nJugador: {nombre_usuario}")
             print("\nLa cantidad de cartas que tiene la computadora es: ", len(mazoPC))
             numero, color = cartaEnJuego
-            if color == "ROJO":
-                color_print = Fore.RED
-            elif color == "AZUL":
-                color_print = Fore.BLUE
-            elif color == "VERDE":
-                color_print = Fore.GREEN
-            elif color == "AMARILLO":
-                color_print = Fore.YELLOW
-            else:
-                color_print = Style.RESET_ALL
-
+            color_print = {
+                "ROJO": Fore.RED,
+                "AZUL": Fore.BLUE,
+                "VERDE": Fore.GREEN,
+                "AMARILLO": Fore.YELLOW
+            }.get(color, Style.RESET_ALL)
             print(f"\nLa carta en juego es: {color_print}{numero} {color}{Style.RESET_ALL}")
 
-
-            # Aplicar efecto pendiente, si lo hay, y saltar turno
+            # Aplicar efectos pendientes
             if efecto_pendiente == "MAS2":
                 if turno == 0:
                     print("¡Efecto +2! El jugador toma 2 cartas y pierde el turno.")
-                    mazoUsuario += repartir(2, mazo)
+                    nuevas, mazo_reparto, mazo_descarte = repartir(2, mazo_reparto, mazo_descarte)
+                    mazoUsuario += nuevas
                     turno = 1
                 else:
                     print("¡Efecto +2! La computadora toma 2 cartas y pierde el turno.")
-                    mazoPC += repartir(2, mazo)
+                    nuevas, mazo_reparto, mazo_descarte = repartir(2, mazo_reparto, mazo_descarte)
+                    mazoPC += nuevas
                     turno = 0
                 efecto_pendiente = None
                 input("\nPresione Enter para continuar...")
@@ -319,63 +319,51 @@ def iniciar_juego():
             if efecto_pendiente == "MAS4":
                 if turno == 0:
                     print("¡Efecto +4! El jugador toma 4 cartas y pierde el turno.")
-                    mazoUsuario += repartir(4, mazo)
+                    nuevas, mazo_reparto, mazo_descarte = repartir(4, mazo_reparto, mazo_descarte)
+                    mazoUsuario += nuevas
                     turno = 1
                 else:
                     print("¡Efecto +4! La computadora toma 4 cartas y pierde el turno.")
-                    mazoPC += repartir(4, mazo)
+                    nuevas, mazo_reparto, mazo_descarte = repartir(4, mazo_reparto, mazo_descarte)
+                    mazoPC += nuevas
                     turno = 0
                 efecto_pendiente = None
                 input("\nPresione Enter para continuar...")
                 continue
-
             elif efecto_pendiente == "BLOQUEO":
-                if turno == 0:
-                    print("¡BLOQUEO! El jugador pierde el turno.")
-                    turno = 1
-                else:
-                    print("¡BLOQUEO! La computadora pierde el turno.")
-                    turno = 0
+                print("¡BLOQUEO! Se salta un turno.")
+                turno = 1 - turno
                 efecto_pendiente = None
                 input("\nPresione Enter para continuar...")
                 continue
             elif efecto_pendiente == "Reversa":
-                if turno == 0:
-                    print("¡Reversa! Se va para atras")
-                    turno = 1
-                else:
-                    print("¡Reversa! Se va para atras")
-                    turno = 0
+                print("¡Reversa! Se invierte el turno (en dos jugadores equivale a saltar turno).")
+                turno = 1 - turno
                 efecto_pendiente = None
                 input("\nPresione Enter para continuar...")
                 continue
 
-            # Turnos normales
+            # Turno normal
             if turno == 0:
-                cartaEnJuego, mazoUsuario = turnoUsuario(mazoUsuario, mazo, cartaEnJuego)
-                # Detectar si la carta jugada es +2 o BLOQUEO para activar efecto
-                if cartaEnJuego[1] == "+2":
-                    efecto_pendiente = "MAS2"
-                elif cartaEnJuego[1] == "+4":
-                    efecto_pendiente = "MAS4"
-                elif cartaEnJuego[1] == "BLOQUEO":
-                    efecto_pendiente = "BLOQUEO"
-                elif cartaEnJuego[1] == "Reversa":
-                    efecto_pendiente = "Reversa"
+                cartaEnJuego, mazoUsuario, mazo_reparto, mazo_descarte = turnoUsuario(
+                    mazoUsuario, mazo_reparto, mazo_descarte, cartaEnJuego
+                )
                 turno = 1
-
             else:
-                cartaEnJuego, mazoPC = turnoPC(mazoPC, mazo, cartaEnJuego)
-                # Detectar si la carta jugada es +2 o BLOQUEO para activar efecto
-                if cartaEnJuego[1] == "+2":
-                    efecto_pendiente = "MAS2"
-                elif cartaEnJuego[1] == "+4":
-                    efecto_pendiente = "MAS4"
-                elif cartaEnJuego[1] == "BLOQUEO":
-                    efecto_pendiente = "BLOQUEO"
-                elif cartaEnJuego[1] == "Reversa":
-                    efecto_pendiente = "Reversa"
+                cartaEnJuego, mazoPC, mazo_reparto, mazo_descarte = turnoPC(
+                    mazoPC, mazo_reparto, mazo_descarte, cartaEnJuego
+                )
                 turno = 0
+
+            # Detectar efecto de la última carta jugada
+            if cartaEnJuego[1] == "+2":
+                efecto_pendiente = "MAS2"
+            elif cartaEnJuego[1] == "+4":
+                efecto_pendiente = "MAS4"
+            elif cartaEnJuego[1] == "BLOQUEO":
+                efecto_pendiente = "BLOQUEO"
+            elif cartaEnJuego[1] == "Reversa":
+                efecto_pendiente = "Reversa"
 
         # Final del juego
         if len(mazoUsuario) == 0:
@@ -388,6 +376,7 @@ def iniciar_juego():
         input("\nPresione Enter para continuar...")
 
 iniciar_juego()
+
 
 '''
 def Reparto() #Descuento las cartas del mazo, solucionar el tema probabilistica.
