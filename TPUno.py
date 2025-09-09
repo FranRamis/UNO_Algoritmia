@@ -22,12 +22,12 @@ def Mazo_Uno():
             mazo.append([color, n])
             mazo.append([color, n])
 
-        for _ in range(2):
+        for n in range(2):
             mazo.append([color, "BLOQUEO"])
             mazo.append([color, "REVERSA"])
             mazo.append([color, "+2"])
 
-    for _ in range(4):
+    for n in range(4):
         mazo.append(["NEGRO", "+4"])
         mazo.append(["NEGRO", "CAMBIO_COLOR"])
 
