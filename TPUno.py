@@ -209,7 +209,7 @@ def turnoUsuario(mazoUsuario, mazo_reparto, mazo_descarte, cartaEnJuego):
                     color_print = Style.RESET_ALL
                 print(f"\nLa carta en juego es: {color_print}{numero} {color}{Style.RESET_ALL}")
                 input("\nPresione Enter para continuar...")
-    return cartaEnJuego, mazoUsuario, mazo_reparto, mazo_descarte
+    return cartaEnJuego, mazoUsuario, mazo_reparto, mazo_descarte, msgOpcion0
 
 def turnoPC(mazoPC, mazo_reparto, mazo_descarte, cartaEnJuego):
     print("\nTurno de la computadora...")
@@ -331,8 +331,6 @@ def iniciar_juego():
         mazoPC, mazo_reparto, mazo_descarte = repartir(7, mazo_reparto, mazo_descarte)
         cartaEnJuego, mazo_reparto, mazo_descarte = repartir(1, mazo_reparto, mazo_descarte)
         cartaEnJuego = cartaEnJuego[0]
-        mazoUsuario.append(["NEGRO", "+4"])  
-        mazoUsuario.append(["NEGRO", "CAMBIO_COLOR"])  
         turno = 0  # 0 = Usuario, 1 = PC
         efecto_pendiente = None
 
@@ -348,7 +346,7 @@ def iniciar_juego():
                 "AMARILLO": Fore.YELLOW
             }.get(color, Style.RESET_ALL)
             print(f"\nLa carta en juego es: {color_print}{numero} {color}{Style.RESET_ALL}")
-
+            
             # Aplicar efectos pendientes
             if efecto_pendiente == "MAS2":
                 if turno == 0:
@@ -393,8 +391,8 @@ def iniciar_juego():
 
             # Turno normal
             if turno == 0:
-                cartaEnJuego, mazoUsuario, mazo_reparto, mazo_descarte = turnoUsuario(
-                    mazoUsuario, mazo_reparto, mazo_descarte, cartaEnJuego
+                cartaEnJuego, mazoUsuario, mazo_reparto, mazo_descarte, msgOpcion0 = turnoUsuario(
+                    mazoUsuario, mazo_reparto, mazo_descarte, cartaEnJuego, 
                 )
                 turno = 1
             else:
@@ -404,14 +402,19 @@ def iniciar_juego():
                 turno = 0
 
             # Detectar efecto de la última carta jugada
-            if cartaEnJuego[1] == "+2":
-                efecto_pendiente = "MAS2"
-            elif cartaEnJuego[1] == "+4":
-                efecto_pendiente = "MAS4"
-            elif cartaEnJuego[1] == "BLOQUEO":
-                efecto_pendiente = "BLOQUEO"
-            elif cartaEnJuego[1] == "Reversa":
-                efecto_pendiente = "Reversa"
+
+            if msgOpcion0 != "0  -> Pasar turno":
+                if cartaEnJuego[1] == "+2":
+                        efecto_pendiente = "MAS2"
+                elif cartaEnJuego[1] == "+4":
+                        efecto_pendiente = "MAS4"
+                elif cartaEnJuego[1] == "BLOQUEO":
+                        efecto_pendiente = "BLOQUEO"
+                elif cartaEnJuego[1] == "Reversa":
+                        efecto_pendiente = "Reversa"
+            else:
+                efecto_pendiente=None
+
 
         # Final del juego
         if len(mazoUsuario) == 0:
