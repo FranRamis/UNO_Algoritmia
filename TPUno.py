@@ -12,6 +12,14 @@ jugadores = [
     ["vera", 45],
     ["lu", 30]
 ]
+valores_cartas = {
+    0: 0, 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6, 7: 7, 8: 8, 9: 9,
+    "+2": 20,
+    "BLOQUEO": 20,
+    "REVERSA": 20,
+    "+4": 50,
+    "CAMBIO_COLOR": 50
+}
 
 def Mazo_Uno():
     colores = ["ROJO", "AMARILLO", "VERDE", "AZUL"]
