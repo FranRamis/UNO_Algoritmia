@@ -13,6 +13,7 @@ jugadores = [
     ["lu", 30]
 ]
 
+#Agregar diccionario de valores de cartas para puntajes
 valores_cartas = {
     0: 0, 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6, 7: 7, 8: 8, 9: 9,
     "+2": 20,
@@ -21,6 +22,7 @@ valores_cartas = {
     "+4": 50,
     "CAMBIO_COLOR": 50
 }
+#la suma de puntos de todas las cartas que quedaron en la mano de un jugador.
 def calcular_puntaje_mano(mazo):
     total = 0
     for carta in mazo:
@@ -463,14 +465,17 @@ def iniciar_juego():
         # Final del juego
         if len(mazoUsuario) == 0:
             print("¡Ganaste!")
-            actualizar_puntuacion(nombre_usuario, 15)
+            puntos = calcular_puntaje_mano(mazoPC)
+            actualizar_puntuacion(nombre_usuario, puntos)
         else:
             print("¡Ganó la computadora!")
-            actualizar_puntuacion(nombre_usuario, -5)
+            puntos = calcular_puntaje_mano(mazoUsuario)
+            actualizar_puntuacion(nombre_usuario, -puntos)
         
         input("\nPresione Enter para continuar...")
 
 iniciar_juego()
+
 
 
 '''
