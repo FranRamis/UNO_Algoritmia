@@ -235,8 +235,6 @@ def turnoUsuario(mazoUsuario, mazo_reparto, mazo_descarte, cartaEnJuego):
                 input("\nPresione Enter para continuar...")
     return cartaEnJuego, mazoUsuario, mazo_reparto, mazo_descarte, msgOpcion0
 
-    return cartaEnJuego, mazoUsuario, mazo_reparto, mazo_descarte
-
 
 def turnoPC(mazoPC, mazo_reparto, mazo_descarte, cartaEnJuego):
     print("\nTurno de la computadora...")
@@ -252,7 +250,6 @@ def turnoPC(mazoPC, mazo_reparto, mazo_descarte, cartaEnJuego):
                 cartaEnJuego[0] = elegirColorPc(mazoPC)
             else:
                 cartaEnJuego = mazoPC[i]
-
 
             cartaEnJuego = mazoPC[i]
             mazo_descarte.append(cartaEnJuego)
@@ -424,21 +421,13 @@ def iniciar_juego():
 
             # Turno normal
             if turno == 0:
-
-                cartaEnJuego, mazoUsuario, mazo_reparto, mazo_descarte, msgOpcion0 = turnoUsuario(
-                    mazoUsuario, mazo_reparto, mazo_descarte, cartaEnJuego)
-
-                cartaEnJuego, mazoUsuario, mazo_reparto, mazo_descarte = turnoUsuario(
-                    mazoUsuario, mazo_reparto, mazo_descarte, cartaEnJuego)
+                cartaEnJuego, mazoUsuario, mazo_reparto, mazo_descarte, msgOpcion0 = turnoUsuario(mazoUsuario, mazo_reparto, mazo_descarte, cartaEnJuego)
                 turno = 1
             else:
-                cartaEnJuego, mazoPC, mazo_reparto, mazo_descarte = turnoPC(
-                    mazoPC, mazo_reparto, mazo_descarte, cartaEnJuego)
+                cartaEnJuego, mazoPC, mazo_reparto, mazo_descarte = turnoPC(mazoPC, mazo_reparto, mazo_descarte, cartaEnJuego)
                 turno = 0
 
-            # Detectar efecto de la última carta jugada
-
-
+            # Detectar efecto de la última carta jugadaver
             if msgOpcion0 != "0  -> Pasar turno":
                 if cartaEnJuego[1] == "+2":
                         efecto_pendiente = "MAS2"
@@ -465,17 +454,18 @@ def iniciar_juego():
         # Final del juego
         if len(mazoUsuario) == 0:
             print("¡Ganaste!")
+            # Puntaje según cartas que le quedan a la PC
             puntos = calcular_puntaje_mano(mazoPC)
             actualizar_puntuacion(nombre_usuario, puntos)
         else:
             print("¡Ganó la computadora!")
+            # Puntaje según cartas que le quedan al usuario
             puntos = calcular_puntaje_mano(mazoUsuario)
             actualizar_puntuacion(nombre_usuario, -puntos)
         
         input("\nPresione Enter para continuar...")
 
 iniciar_juego()
-
 
 
 '''
