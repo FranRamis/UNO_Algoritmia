@@ -71,18 +71,13 @@ def mostrarMazo(mazo):
         print(f"{i+1} -> {color_print}{numero} {color}{Style.RESET_ALL}")
 
 def validarCarta(cartaEnJuego, cartaUsuario):
-    
     check = False
     if cartaEnJuego[0] == cartaUsuario[0] or cartaEnJuego[1] == cartaUsuario[1]:
-        check = True
-
-       
-    elif (cartaUsuario[0] == 'NEGRO') :
-
+        check = True  
+    elif (cartaUsuario[0] == "NEGRO") :
+        check = True 
     elif (cartaUsuario[0] in ["+2", "BLOQUEO", "REVERSA", "+4"]) and cartaEnJuego[1] == cartaUsuario[1]:
-
         check = True
-        
     return check
 
 # función para selección con flechas
@@ -414,17 +409,14 @@ def iniciar_juego():
             if turno == 0:
 
                 cartaEnJuego, mazoUsuario, mazo_reparto, mazo_descarte, msgOpcion0 = turnoUsuario(
-                    mazoUsuario, mazo_reparto, mazo_descarte, cartaEnJuego, 
+                    mazoUsuario, mazo_reparto, mazo_descarte, cartaEnJuego)
 
                 cartaEnJuego, mazoUsuario, mazo_reparto, mazo_descarte = turnoUsuario(
-                    mazoUsuario, mazo_reparto, mazo_descarte, cartaEnJuego
-
-                )
+                    mazoUsuario, mazo_reparto, mazo_descarte, cartaEnJuego)
                 turno = 1
             else:
                 cartaEnJuego, mazoPC, mazo_reparto, mazo_descarte = turnoPC(
-                    mazoPC, mazo_reparto, mazo_descarte, cartaEnJuego
-                )
+                    mazoPC, mazo_reparto, mazo_descarte, cartaEnJuego)
                 turno = 0
 
             # Detectar efecto de la última carta jugada
