@@ -12,6 +12,7 @@ jugadores = [
     ["vera", 45],
     ["lu", 30]
 ]
+
 valores_cartas = {
     0: 0, 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6, 7: 7, 8: 8, 9: 9,
     "+2": 20,
@@ -20,6 +21,12 @@ valores_cartas = {
     "+4": 50,
     "CAMBIO_COLOR": 50
 }
+def calcular_puntaje_mano(mazo):
+    total = 0
+    for carta in mazo:
+        valor = carta[1]  
+        total += valores_cartas.get(str(valor), 0)
+    return total
 
 def Mazo_Uno():
     colores = ["ROJO", "AMARILLO", "VERDE", "AZUL"]
