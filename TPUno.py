@@ -390,8 +390,7 @@ def iniciar_juego():
             mazoPC, mazo_reparto, mazo_descarte = repartir(7, mazo_reparto, mazo_descarte)
             cartaEnJuego, mazo_reparto, mazo_descarte = repartir(1, mazo_reparto, mazo_descarte)
             cartaEnJuego = cartaEnJuego[0]
-            mazoUsuario = [["BLOQUEO", "ROJO"]]
-            cartaEnJuego = ["5", "ROJO"]
+            
             turno = 0  # 0 = Usuario, 1 = PC
             efecto_pendiente = None
 
