@@ -3,15 +3,23 @@ import os
 import msvcrt  # Para captura de teclas en Windows
 from colorama import init, Fore, Style  
 init(autoreset=True)
-
+'''
 jugadores = [
-    ["bruno", 70],
-    ["mar", 65],
-    ["vicky", 55],
-    ["thomas", 50],
-    ["vera", 45],
-    ["lu", 30]
+["bruno", 70],
+["mar", 65],
+["vicky", 55],
+["thomas", 50],
+["vera", 45],
+["lu", 30]
 ]
+'''
+
+jugadores_dic = {
+"Thomas": 70, 
+"Vera": 70,
+"Fran": 65,
+"Vera": 55
+}
 
 def Mazo_Uno():
     colores = ["ROJO", "AMARILLO", "VERDE", "AZUL"]
@@ -286,20 +294,38 @@ def reglas():
     print("7. La carta +4 indica que el jugador contrincante deberá tomar cuatro cartas del mazo y perderá el turno")
     print("8. El primer jugador en quedarse sin cartas gana")
     input("\nPresione Enter para continuar...")
-
+'''
 def ranking():
     print("\n=== RANKING DE JUGADORES ===")
     ranking_ordenado = sorted(jugadores, key=lambda x: x[1], reverse=True)
     for i, j in enumerate(ranking_ordenado):
         print(f"{i+1}. {j[0]}: {j[1]} puntos")
     input("\nPresione Enter para continuar...")
+'''
+def ranking():
+    print("\n=== RANKING DE JUGADORES ===")
+    ranking_ordenado = sorted(jugadores_dic.items(), key=lambda x: x[1], reverse=True)
+    for i in range(len(ranking_ordenado)):
+        nombre, puntos = ranking_ordenado[i]
+        print(f"{i+1}. {nombre}: {puntos} puntos")
+    input("\nPresione Enter para continuar...")
 
+'''
 def actualizar_puntuacion(nombre, puntos):
     for i in range(len(jugadores)):
         if jugadores[i][0].lower() == nombre.lower():
             jugadores[i][1] += puntos
             return
     jugadores.append([nombre.lower(), puntos])    
+'''
+
+def actualizar_puntuacion(nombre, puntos):
+    nombre_lower = nombre.lower()
+    for jugador_dic in jugadores_dic:
+        if jugador_dic.lower() == nombre_lower:
+            jugadores_dic[jugador_dic] += puntos
+            break
+
 
 def menu(historial):
     while True:
@@ -364,7 +390,8 @@ def iniciar_juego():
             mazoPC, mazo_reparto, mazo_descarte = repartir(7, mazo_reparto, mazo_descarte)
             cartaEnJuego, mazo_reparto, mazo_descarte = repartir(1, mazo_reparto, mazo_descarte)
             cartaEnJuego = cartaEnJuego[0]
-            
+            mazoUsuario = [["BLOQUEO", "ROJO"]]
+            cartaEnJuego = ["5", "ROJO"]
             turno = 0  # 0 = Usuario, 1 = PC
             efecto_pendiente = None
 
@@ -416,7 +443,7 @@ def iniciar_juego():
                     efecto_pendiente = None
                     input("\nPresione Enter para continuar...")
                     continue
-                elif efecto_pendiente == "Reversa":
+                elif efecto_pendiente == "REVERSA":
                     print("¡Reversa! Se invierte el turno (en dos jugadores equivale a saltar turno).")
                     turno = 1 - turno
                     efecto_pendiente = None
