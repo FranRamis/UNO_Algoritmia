@@ -294,14 +294,14 @@ def reglas():
     print("7. La carta +4 indica que el jugador contrincante deberá tomar cuatro cartas del mazo y perderá el turno")
     print("8. El primer jugador en quedarse sin cartas gana")
     input("\nPresione Enter para continuar...")
-'''
+    
 def ranking():
     print("\n=== RANKING DE JUGADORES ===")
     ranking_ordenado = sorted(jugadores, key=lambda x: x[1], reverse=True)
     for i, j in enumerate(ranking_ordenado):
         print(f"{i+1}. {j[0]}: {j[1]} puntos")
     input("\nPresione Enter para continuar...")
-'''
+
 def ranking():
     print("\n=== RANKING DE JUGADORES ===")
     ranking_ordenado = sorted(jugadores_dic.items(), key=lambda x: x[1], reverse=True)
@@ -310,14 +310,14 @@ def ranking():
         print(f"{i+1}. {nombre}: {puntos} puntos")
     input("\nPresione Enter para continuar...")
 
-'''
+
 def actualizar_puntuacion(nombre, puntos):
     for i in range(len(jugadores)):
         if jugadores[i][0].lower() == nombre.lower():
             jugadores[i][1] += puntos
             return
     jugadores.append([nombre.lower(), puntos])    
-'''
+
 
 def actualizar_puntuacion(nombre, puntos):
     nombre_lower = nombre.lower()
