@@ -362,7 +362,7 @@ def iniciar_juego():
     }
     while True:
         opcion = menu(historial)
-        if opcion == "salir":
+        if opcion == False:
             break
         elif opcion == True:
             mazo_general = Mazo_Uno() # Mazo original
