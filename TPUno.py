@@ -15,10 +15,10 @@ jugadores = [
 '''
 
 jugadores_dic = {
-"Thomas": 70, 
-"Vera": 70,
-"Fran": 65,
-"Vera": 55
+"thomas": 70, 
+"vera": 70,
+"fran": 65,
+"augus": 55
 }
 
 def Mazo_Uno():
