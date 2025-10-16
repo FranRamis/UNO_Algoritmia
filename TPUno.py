@@ -127,21 +127,23 @@ def seleccionar_con_flechas(mazo, msgOpcion0, cartaEnJuego): #permite elegir car
         elif tecla == b'0':
             return 0
 
-def elegir_color(): #permite elegir color tras un comodín.
-    colores = ["ROJO", "AMARILLO", "VERDE", "AZUL"] #Lista de colores válidos.
-    print("Elegí un color para el cambio:") #Muestra mensaje.
-    for i, col in enumerate(colores): #Muestra colores numerados.
+def elegir_color():  # permite elegir color tras un comodín.
+    colores = ["ROJO", "AMARILLO", "VERDE", "AZUL"]  # Lista de colores válidos.
+    print("Elegí un color para el cambio:")  # Muestra mensaje.
+    for i, col in enumerate(colores):  # Muestra colores numerados.
         print(f"{i+1}. {col}")
-    noSalir = True #Loop de validación de entrada.
-    while noSalir:
-            eleccion = int(input("Ingrese el número del color elegido: ")) - 1 #Pide número de color.
-            if 0 <= eleccion < len(colores): #Valida la elección y la devuelve.
-                noSalir = False #
-                return colores[eleccion]
-               
+    while True:
+        try:
+            eleccion = int(input("Ingrese el número del color elegido: ")) - 1
+            if 0 <= eleccion < len(colores):# esto es lo que estas intentando sacar
+                #si por ejemplo el numero es colores[24] rompe y sale por el except y te vuelve a pedir el num 
+                return colores[eleccion] 
             else:
-                print("Elección no válida. Intente de nuevo.") #Si no es válido, repite.
-                noSalir = True        
+                print("Número fuera de rango. Intente nuevamente.")
+        except ValueError:
+            print("Entrada no válida. Por favor, ingrese un número.")
+
+        
 def elegirColorPc(mazo): #decide color óptimo para la PC.
     colores_validos = ["ROJO", "AZUL", "VERDE", "AMARILLO"] #Lista de colores válidos.
     conteo = {color: 0 for color in colores_validos} #Crea conteo de colores.
