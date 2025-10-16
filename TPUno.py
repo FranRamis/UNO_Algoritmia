@@ -294,11 +294,18 @@ def ranking(): #muestra el ranking de jugadores.
 
 def actualizar_puntuacion(nombre, puntos): #actualiza puntaje de un jugador.
     nombre_lower = nombre.lower() #Pasa a minúsculas el nombre.
+    try:
+        jugadores_dic[nombre] += puntos 
+    except KeyError:
+        print("este jugador no existe, lo agrego")
+        jugadores_dic[nombre] = puntos
+
+        '''
     for jugador_dic in jugadores_dic: #Busca jugador y suma puntos.
         if jugador_dic.lower() == nombre_lower:
             jugadores_dic[jugador_dic] += puntos
             break
-
+'''
 
 def menu(historial): #menú principal del juego.
     while True:
@@ -362,11 +369,13 @@ def iniciar_juego(): #controla todo el flujo del juego.
             mazoUsuario, mazo_reparto, mazo_descarte = repartir(7, mazo_reparto, mazo_descarte)
             mazoPC, mazo_reparto, mazo_descarte = repartir(7, mazo_reparto, mazo_descarte)
             cartaEnJuego, mazo_reparto, mazo_descarte = repartir(1, mazo_reparto, mazo_descarte)
+            
+            while cartaEnJuego[0][1] == "NEGRO":
+                  cartaEnJuego, mazo_reparto, mazo_descarte = repartir(1, mazo_reparto, mazo_descarte)        
             cartaEnJuego = cartaEnJuego[0]
             
             turno = 0  # 0 = Usuario, 1 = PC
             efecto_pendiente = None
-
             while len(mazoPC) > 0 and len(mazoUsuario) > 0:
                 os.system('cls')
                 print(f"\nJugador: {nombre_usuario}")
