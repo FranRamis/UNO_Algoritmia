@@ -316,35 +316,39 @@ def menu(historial): #menú principal del juego.
         print("3. Ranking de jugadores")
         print("4. Historial")
         print("5. Salir del juego")
-        
-        opcion = input("\nSeleccione una opción: ")
-        
-        if opcion == "1":
-            return True
-        elif opcion == "2":
-            reglas()
-        elif opcion == "3":
-            ranking()
-        elif opcion == "4":
-            if historial["Usuario"] or historial["PC"]:
-                print("\n=== HISTORIAL DE JUGADAS ===") #Muestra historial de jugadas.
+        try:
+            opcion = int(input("\nSeleccione una opción: "))
+            
+            if opcion == 1:
+                return True
+            elif opcion == 2:
+                reglas()
+            elif opcion == 3:
+                ranking()
+            elif opcion == 4:
+                if historial["Usuario"] or historial["PC"]:
+                    print("\n=== HISTORIAL DE JUGADAS ===") #Muestra historial de jugadas.
 
-                log_total = []
-                for jugada in historial["Usuario"]:
-                    log_total.append(("Usuario", jugada))
-                for jugada in historial["PC"]:
-                    log_total.append(("PC", jugada))
-                
-                for jugador, jugada in log_total:
-                    print(f"{jugada['mensaje']} | Cartas restantes: {jugada['cartas_restantes']}")
+                    log_total = []
+                    for jugada in historial["Usuario"]:
+                        log_total.append(("Usuario", jugada))
+                    for jugada in historial["PC"]:
+                        log_total.append(("PC", jugada))
+                    
+                    for jugador, jugada in log_total:
+                        print(f"{jugada['mensaje']} | Cartas restantes: {jugada['cartas_restantes']}")
+                else:
+                    print("\nNo hay historial de partidas todavía.") #Si no hay historial, avisa.
+                input("\nPresione Enter para continuar...")
+            elif opcion == 5:
+                print("\n¡Gracias por jugar!")
+                return False
             else:
-                print("\nNo hay historial de partidas todavía.") #Si no hay historial, avisa.
-            input("\nPresione Enter para continuar...")
-        elif opcion == "5":
-            print("\n¡Gracias por jugar!")
-            return False
-        else:
-            print("\nOpción no válida")
+                print("\nNumero Incorrecto! Por favor, ingrese un número del 1 al 5.") 
+                input("\nPresione Enter para continuar...")
+            
+        except ValueError:
+            print("\nSolo se permiten numero! Por favor, ingrese un número del 1 al 5.")
             input("Presione Enter para continuar...")
 
 # ================== Juego principal ==================
