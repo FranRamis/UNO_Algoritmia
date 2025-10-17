@@ -296,11 +296,18 @@ def ranking(): #muestra el ranking de jugadores.
 
 def actualizar_puntuacion(nombre, puntos): #actualiza puntaje de un jugador.
     nombre_lower = nombre.lower() #Pasa a minúsculas el nombre.
+    try:
+        jugadores_dic[nombre] += puntos 
+    except KeyError:
+        print("este jugador no existe, lo agrego")
+        jugadores_dic[nombre] = puntos
+
+        '''
     for jugador_dic in jugadores_dic: #Busca jugador y suma puntos.
         if jugador_dic.lower() == nombre_lower:
             jugadores_dic[jugador_dic] += puntos
             break
-
+'''
 
 def menu(historial): #menú principal del juego.
     while True:
@@ -311,35 +318,39 @@ def menu(historial): #menú principal del juego.
         print("3. Ranking de jugadores")
         print("4. Historial")
         print("5. Salir del juego")
-        
-        opcion = input("\nSeleccione una opción: ")
-        
-        if opcion == "1":
-            return True
-        elif opcion == "2":
-            reglas()
-        elif opcion == "3":
-            ranking()
-        elif opcion == "4":
-            if historial["Usuario"] or historial["PC"]:
-                print("\n=== HISTORIAL DE JUGADAS ===") #Muestra historial de jugadas.
+        try:
+            opcion = int(input("\nSeleccione una opción: "))
+            
+            if opcion == 1:
+                return True
+            elif opcion == 2:
+                reglas()
+            elif opcion == 3:
+                ranking()
+            elif opcion == 4:
+                if historial["Usuario"] or historial["PC"]:
+                    print("\n=== HISTORIAL DE JUGADAS ===") #Muestra historial de jugadas.
 
-                log_total = []
-                for jugada in historial["Usuario"]:
-                    log_total.append(("Usuario", jugada))
-                for jugada in historial["PC"]:
-                    log_total.append(("PC", jugada))
-                
-                for jugador, jugada in log_total:
-                    print(f"{jugada['mensaje']} | Cartas restantes: {jugada['cartas_restantes']}")
+                    log_total = []
+                    for jugada in historial["Usuario"]:
+                        log_total.append(("Usuario", jugada))
+                    for jugada in historial["PC"]:
+                        log_total.append(("PC", jugada))
+                    
+                    for jugador, jugada in log_total:
+                        print(f"{jugada['mensaje']} | Cartas restantes: {jugada['cartas_restantes']}")
+                else:
+                    print("\nNo hay historial de partidas todavía.") #Si no hay historial, avisa.
+                input("\nPresione Enter para continuar...")
+            elif opcion == 5:
+                print("\n¡Gracias por jugar!")
+                return False
             else:
-                print("\nNo hay historial de partidas todavía.") #Si no hay historial, avisa.
-            input("\nPresione Enter para continuar...")
-        elif opcion == "5":
-            print("\n¡Gracias por jugar!")
-            return False
-        else:
-            print("\nOpción no válida")
+                print("\nNumero Incorrecto! Por favor, ingrese un número del 1 al 5.") 
+                input("\nPresione Enter para continuar...")
+            
+        except ValueError:
+            print("\nSolo se permiten numero! Por favor, ingrese un número del 1 al 5.")
             input("Presione Enter para continuar...")
 
 # ================== Juego principal ==================
@@ -364,11 +375,13 @@ def iniciar_juego(): #controla todo el flujo del juego.
             mazoUsuario, mazo_reparto, mazo_descarte = repartir(7, mazo_reparto, mazo_descarte)
             mazoPC, mazo_reparto, mazo_descarte = repartir(7, mazo_reparto, mazo_descarte)
             cartaEnJuego, mazo_reparto, mazo_descarte = repartir(1, mazo_reparto, mazo_descarte)
+            
+            while cartaEnJuego[0][1] == "NEGRO":
+                  cartaEnJuego, mazo_reparto, mazo_descarte = repartir(1, mazo_reparto, mazo_descarte)        
             cartaEnJuego = cartaEnJuego[0]
             
             turno = 0  # 0 = Usuario, 1 = PC
             efecto_pendiente = None
-
             while len(mazoPC) > 0 and len(mazoUsuario) > 0:
                 os.system('cls')
                 print(f"\nJugador: {nombre_usuario}")
