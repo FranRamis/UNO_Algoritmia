@@ -2,6 +2,7 @@ import random #Importa la librería random para generar aleatoriedad.
 import os #Importa la librería os para ejecutar comandos del sistema para limpiar la pantalla.
 import msvcrt  # Para captura de teclas en Windows
 from colorama import init, Fore, Style  #Inicializa colorama con auto-reset para que los colores no se propaguen.
+import json
 init(autoreset=True)
 
 jugadores_dic = { #Diccionario jugadores_dic con jugadores y sus puntajes actuales.
@@ -276,17 +277,16 @@ def registrar_usuario(): #pide nombre del jugador.
         nombre = input("Ingrese su nombre: ")
     return nombre #Devuelve nombre.
 
-def reglas():
-    print("\n=== REGLAS DEL UNO ===") #imprime las reglas básicas del UNO.
-    print("1. Cada jugador recibe 7 cartas al inicio")
-    print("2. Se juega por turnos")
-    print("3. Se puede jugar una carta si coincide con el número o color de la carta en juego")
-    print("4. Si no tenes una carta válida, tenes que tomar una carta del mazo")
-    print("5. La carta de bloqueo le roba el turno al jugador contrincante")
-    print("6. La carta +2 indica que el jugador contrincante deberá tomar dos cartas del mazo y perderá el turno")
-    print("7. La carta +4 indica que el jugador contrincante deberá tomar cuatro cartas del mazo y perderá el turno")
-    print("8. El primer jugador en quedarse sin cartas gana")
-    input("\nPresione Enter para continuar...") #Pausa para continuar.
+def reglas(): #imprime las reglas básicas del UNO.
+    try: 
+        reglas = open("FIles/reglas.txt", "r") #Abre archivo de reglas.
+        for linea in reglas:
+            print(linea)
+        reglas.close() #Cierra archivo.
+        input("\nPresione Enter para continuar...") #Pausa para continuar.
+    except FileNotFoundError:
+        print("Archivo de reglas no encontrado.")
+        input("\nPresione Enter para continuar...")
     
 def ranking(): #muestra el ranking de jugadores.
     print("\n=== RANKING DE JUGADORES ===") #Título.
