@@ -1,0 +1,9 @@
+=== REGLAS DEL UNO ===
+    1. Cada jugador recibe 7 cartas al inicio
+    2. Se juega por turnos
+    3. Se puede jugar una carta si coincide con el número o color de la carta en juego
+    4. Si no tenes una carta válida, tenes que tomar una carta del mazo
+    5. La carta de bloqueo le roba el turno al jugador contrincante
+    6. La carta +2 indica que el jugador contrincante deberá tomar dos cartas del mazo y perderá el turno
+    7. La carta +4 indica que el jugador contrincante deberá tomar cuatro cartas del mazo y perderá el turno
+    8. El primer jugador en quedarse sin cartas gana
