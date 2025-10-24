@@ -10,6 +10,8 @@ jugadores_dic = { #Diccionario jugadores_dic con jugadores y sus puntajes actual
 "fran": 65,
 "augus": 55
 }
+print("----------------------------------------------aca arranca ---------------------------")
+
 
 def Mazo_Uno(): #crea y devuelve el mazo completo de UNO.
     colores = ["ROJO", "AMARILLO", "VERDE", "AZUL"]
