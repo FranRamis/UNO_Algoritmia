@@ -189,7 +189,7 @@ def elegirColorPc(mazo): #decide color óptimo para la PC.
         return max_color        
 
 
-def turnoUsuario(mazoUsuario, mazo_reparto, mazo_descarte, cartaEnJuego, historial, nombre): #lógica del turno del jugador.
+def turnoUsuario(mazoUsuario, mazo_reparto, mazo_descarte, cartaEnJuego, historial, nombre, id_partida): #lógica del turno del jugador.
     salir = False #Variables de control de turno.
     tomoUnaCarta = False
     opcion = -1
@@ -225,7 +225,8 @@ def turnoUsuario(mazoUsuario, mazo_reparto, mazo_descarte, cartaEnJuego, histori
                 "carta": cartaEnJuego,
                 "cartas_restantes": len(mazoUsuario),
                 "mensaje": f"{nombre} jugó {cartaEnJuego[0]} {cartaEnJuego[1]}",
-                "fecha_hora": fecha_hora_actual
+                "fecha_hora": fecha_hora_actual,
+                "id_partida": id_partida
                 })
                 salir = True
             else:
@@ -247,7 +248,7 @@ def turnoUsuario(mazoUsuario, mazo_reparto, mazo_descarte, cartaEnJuego, histori
     return cartaEnJuego, mazoUsuario, mazo_reparto, mazo_descarte, msgOpcion0 #Devuelve estados actualizados.
 
 
-def turnoPC(mazoPC, mazo_reparto, mazo_descarte, cartaEnJuego, historial, clave_pc_actual): #lógica del turno de la computadora.
+def turnoPC(mazoPC, mazo_reparto, mazo_descarte, cartaEnJuego, historial, clave_pc_actual, id_partida): #lógica del turno de la computadora.
     print("\nTurno de la computadora...") #Mensaje de turno PC.
     jugada_valida = False #Bandera jugada válida.
     i = 0
@@ -270,7 +271,8 @@ def turnoPC(mazoPC, mazo_reparto, mazo_descarte, cartaEnJuego, historial, clave_
             "carta": cartaEnJuego,
             "cartas_restantes": len(mazoPC),
             "mensaje": f"PC jugó {cartaEnJuego[0]} {cartaEnJuego[1]}",
-            "fecha_hora": fecha_hora_actual
+            "fecha_hora": fecha_hora_actual,
+            "id_partida": id_partida
             })
             jugada_valida = True
         else:
@@ -361,16 +363,27 @@ def menu(historial, nombre, clave_pc_actual): #menú principal del juego.
 
                     log_total = []
                     for jugada in historial[nombre]:
-                        log_total.append((nombre, jugada)) 
+                        if 'id_partida' in jugada:
+                            log_total.append((nombre, jugada)) 
                     for jugada in historial.get(clave_pc_actual,[]):
-                        log_total.append(("PC", jugada))
+                        if 'id_partida' in jugada:
+                            log_total.append(("PC", jugada))
 
-                    log_total.sort(key=lambda x: x[1]['turno'])
+                    log_total.sort(key=lambda x: x[1]['fecha_hora'])
 
+                    id_partida_anterior = None
                     for jugador, jugada in log_total:
-                        print(f"{jugada['fecha_hora']} - [{jugador} - Turno {jugada['turno']}] {jugada['mensaje']} | Cartas restantes: {jugada['cartas_restantes']}")
+                        
+                        id_partida_actual = jugada['id_partida']
+                        
+                        if id_partida_anterior is not None and id_partida_actual != id_partida_anterior:
+                            print("-------------------- FIN DE PARTIDA --------------------")
+
+                        print(f"{jugada['fecha_hora']} - {jugada['mensaje']} | Cartas restantes: {jugada['cartas_restantes']}")
+                        
+                        id_partida_anterior = id_partida_actual
                 else:
-                    print(f"\nNo hay historial de partidas de {nombre} todavía.") #Si no hay historial, avisa.
+                    print(f"\nNo hay historial de partidas de {nombre} todavía.")
                 input("\nPresione Enter para continuar...")
             elif opcion == 5:
                 print("\n¡Gracias por jugar!")
@@ -388,18 +401,21 @@ def iniciar_juego(): #controla todo el flujo del juego.
     nombre_usuario = registrar_usuario() #Registra usuario.
     print(f"\n¡Bienvenido {nombre_usuario}!") #Mensaje de bienvenida.
     input("Presione Enter para continuar...") #Pausa.
-    historial = cargar_historial_json()
-    clave_pc_actual = f"PC_VS_{nombre_usuario}"
+    historial = cargar_historial_json() #Cargo historial de partidas
+    clave_pc_actual = f"PC_VS_{nombre_usuario}" 
     while True: #Loop principal del juego.
         opcion = menu(historial, nombre_usuario, clave_pc_actual)
         if opcion == False:
             guardar_historial_json(historial)
             break
         elif opcion == True: #Si usuario elige jugar: prepara mazos, reparte y elige carta inicial.
+            id_partida = datetime.now().strftime("%Y%m%d%H%M%S") 
+
             if nombre_usuario not in historial:
                 historial[nombre_usuario] = []
-            historial[clave_pc_actual] = []
-            historial[nombre_usuario] = []
+
+            if clave_pc_actual not in historial:
+                historial[clave_pc_actual] = []
 
             mazo_general = Mazo_Uno() # Mazo original
             mazo_reparto = mazo_general.copy() # Copio el original para modificarlo
@@ -475,12 +491,12 @@ def iniciar_juego(): #controla todo el flujo del juego.
                 if turno == 0:
 
                     cartaEnJuego, mazoUsuario, mazo_reparto, mazo_descarte, msgOpcion0 = turnoUsuario(
-                        mazoUsuario, mazo_reparto, mazo_descarte, cartaEnJuego, historial, nombre_usuario)
+                        mazoUsuario, mazo_reparto, mazo_descarte, cartaEnJuego, historial, nombre_usuario, id_partida)
                     turno = 1
                 #Lógica del turno PC.
                 else:
                     cartaEnJuego, mazoPC, mazo_reparto, mazo_descarte = turnoPC(
-                        mazoPC, mazo_reparto, mazo_descarte, cartaEnJuego, historial, clave_pc_actual)
+                        mazoPC, mazo_reparto, mazo_descarte, cartaEnJuego, historial, clave_pc_actual, id_partida)
                     turno = 0
 
                 # Detectar efecto de la última carta jugada

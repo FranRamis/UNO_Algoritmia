@@ -5,273 +5,322 @@
             "turno": 1,
             "carta": [
                 4,
-                "AZUL"
+                "ROJO"
             ],
             "cartas_restantes": 6,
-            "mensaje": "fran jugó 4 AZUL",
-            "fecha_hora": "2025-10-25 12:36:50"
+            "mensaje": "fran jugó 4 ROJO",
+            "fecha_hora": "2025-10-25 12:55:59",
+            "id_partida": "20251025125556"
         },
         {
             "turno": 2,
             "carta": [
                 4,
-                "AMARILLO"
+                "VERDE"
             ],
-            "cartas_restantes": 5,
-            "mensaje": "fran jugó 4 AMARILLO",
-            "fecha_hora": "2025-10-25 12:36:52"
+            "cartas_restantes": 9,
+            "mensaje": "fran jugó 4 VERDE",
+            "fecha_hora": "2025-10-25 12:56:08",
+            "id_partida": "20251025125556"
         },
         {
             "turno": 3,
             "carta": [
-                3,
-                "AMARILLO"
+                6,
+                "VERDE"
             ],
-            "cartas_restantes": 4,
-            "mensaje": "fran jugó 3 AMARILLO",
-            "fecha_hora": "2025-10-25 12:36:54"
+            "cartas_restantes": 8,
+            "mensaje": "fran jugó 6 VERDE",
+            "fecha_hora": "2025-10-25 12:56:11",
+            "id_partida": "20251025125556"
         },
         {
             "turno": 4,
             "carta": [
-                7,
+                2,
                 "VERDE"
             ],
-            "cartas_restantes": 3,
-            "mensaje": "fran jugó 7 VERDE",
-            "fecha_hora": "2025-10-25 12:36:57"
+            "cartas_restantes": 7,
+            "mensaje": "fran jugó 2 VERDE",
+            "fecha_hora": "2025-10-25 12:56:13",
+            "id_partida": "20251025125556"
         },
         {
             "turno": 5,
             "carta": [
-                6,
-                "VERDE"
+                1,
+                "AMARILLO"
             ],
-            "cartas_restantes": 2,
-            "mensaje": "fran jugó 6 VERDE",
-            "fecha_hora": "2025-10-25 12:36:59"
+            "cartas_restantes": 6,
+            "mensaje": "fran jugó 1 AMARILLO",
+            "fecha_hora": "2025-10-25 12:56:17",
+            "id_partida": "20251025125556"
         },
         {
             "turno": 6,
             "carta": [
-                0,
-                "ROJO"
+                "REVERSA",
+                "AMARILLO"
             ],
-            "cartas_restantes": 3,
-            "mensaje": "fran jugó 0 ROJO",
-            "fecha_hora": "2025-10-25 12:37:06"
+            "cartas_restantes": 5,
+            "mensaje": "fran jugó REVERSA AMARILLO",
+            "fecha_hora": "2025-10-25 12:56:18",
+            "id_partida": "20251025125556"
         },
         {
             "turno": 7,
             "carta": [
-                6,
-                "ROJO"
+                8,
+                "AMARILLO"
             ],
-            "cartas_restantes": 2,
-            "mensaje": "fran jugó 6 ROJO",
-            "fecha_hora": "2025-10-25 12:37:08"
+            "cartas_restantes": 4,
+            "mensaje": "fran jugó 8 AMARILLO",
+            "fecha_hora": "2025-10-25 12:56:20",
+            "id_partida": "20251025125556"
         },
         {
             "turno": 8,
             "carta": [
-                "BLOQUEO",
+                "CAMBIO_COLOR",
                 "VERDE"
             ],
-            "cartas_restantes": 5,
-            "mensaje": "fran jugó BLOQUEO VERDE",
-            "fecha_hora": "2025-10-25 12:37:14"
+            "cartas_restantes": 3,
+            "mensaje": "fran jugó CAMBIO_COLOR VERDE",
+            "fecha_hora": "2025-10-25 12:56:23",
+            "id_partida": "20251025125556"
         },
         {
             "turno": 9,
             "carta": [
-                "BLOQUEO",
-                "ROJO"
+                3,
+                "VERDE"
             ],
-            "cartas_restantes": 4,
-            "mensaje": "fran jugó BLOQUEO ROJO",
-            "fecha_hora": "2025-10-25 12:37:16"
+            "cartas_restantes": 2,
+            "mensaje": "fran jugó 3 VERDE",
+            "fecha_hora": "2025-10-25 12:56:28",
+            "id_partida": "20251025125556"
         },
         {
             "turno": 10,
             "carta": [
-                "+2",
-                "ROJO"
+                3,
+                "AZUL"
             ],
-            "cartas_restantes": 3,
-            "mensaje": "fran jugó +2 ROJO",
-            "fecha_hora": "2025-10-25 12:37:19"
+            "cartas_restantes": 1,
+            "mensaje": "fran jugó 3 AZUL",
+            "fecha_hora": "2025-10-25 12:56:29",
+            "id_partida": "20251025125556"
         },
         {
             "turno": 11,
             "carta": [
-                "+2",
-                "AMARILLO"
+                "+4",
+                "ROJO"
             ],
-            "cartas_restantes": 2,
-            "mensaje": "fran jugó +2 AMARILLO",
-            "fecha_hora": "2025-10-25 12:37:21"
+            "cartas_restantes": 0,
+            "mensaje": "fran jugó +4 ROJO",
+            "fecha_hora": "2025-10-25 12:56:31",
+            "id_partida": "20251025125556"
         },
         {
             "turno": 12,
             "carta": [
-                9,
+                6,
                 "AMARILLO"
             ],
-            "cartas_restantes": 1,
-            "mensaje": "fran jugó 9 AMARILLO",
-            "fecha_hora": "2025-10-25 12:37:22"
+            "cartas_restantes": 6,
+            "mensaje": "fran jugó 6 AMARILLO",
+            "fecha_hora": "2025-10-25 12:57:01",
+            "id_partida": "20251025125651"
         },
         {
             "turno": 13,
             "carta": [
-                "CAMBIO_COLOR",
-                "VERDE"
+                5,
+                "ROJO"
             ],
-            "cartas_restantes": 1,
-            "mensaje": "fran jugó CAMBIO_COLOR VERDE",
-            "fecha_hora": "2025-10-25 12:37:26"
+            "cartas_restantes": 5,
+            "mensaje": "fran jugó 5 ROJO",
+            "fecha_hora": "2025-10-25 12:57:05",
+            "id_partida": "20251025125651"
         },
         {
             "turno": 14,
             "carta": [
-                9,
-                "VERDE"
+                "CAMBIO_COLOR",
+                "AZUL"
             ],
-            "cartas_restantes": 1,
-            "mensaje": "fran jugó 9 VERDE",
-            "fecha_hora": "2025-10-25 12:37:38"
+            "cartas_restantes": 4,
+            "mensaje": "fran jugó CAMBIO_COLOR AZUL",
+            "fecha_hora": "2025-10-25 12:57:07",
+            "id_partida": "20251025125651"
         },
         {
             "turno": 15,
             "carta": [
-                2,
-                "ROJO"
+                4,
+                "AZUL"
             ],
-            "cartas_restantes": 2,
-            "mensaje": "fran jugó 2 ROJO",
-            "fecha_hora": "2025-10-25 12:37:44"
+            "cartas_restantes": 3,
+            "mensaje": "fran jugó 4 AZUL",
+            "fecha_hora": "2025-10-25 12:57:12",
+            "id_partida": "20251025125651"
         }
     ],
     "PC_VS_fran": [
         {
             "turno": 1,
             "carta": [
-                0,
-                "AMARILLO"
+                "BLOQUEO",
+                "ROJO"
             ],
-            "cartas_restantes": 7,
-            "mensaje": "PC jugó 0 AMARILLO",
-            "fecha_hora": "2025-10-25 12:36:52"
+            "cartas_restantes": 6,
+            "mensaje": "PC jugó BLOQUEO ROJO",
+            "fecha_hora": "2025-10-25 12:55:59",
+            "id_partida": "20251025125556"
         },
         {
             "turno": 2,
             "carta": [
-                3,
-                "VERDE"
+                "+4",
+                "ROJO"
             ],
-            "cartas_restantes": 6,
-            "mensaje": "PC jugó 3 VERDE",
-            "fecha_hora": "2025-10-25 12:36:54"
+            "cartas_restantes": 5,
+            "mensaje": "PC jugó +4 ROJO",
+            "fecha_hora": "2025-10-25 12:56:01",
+            "id_partida": "20251025125556"
         },
         {
             "turno": 3,
             "carta": [
-                7,
-                "VERDE"
+                4,
+                "ROJO"
             ],
-            "cartas_restantes": 5,
-            "mensaje": "PC jugó 7 VERDE",
-            "fecha_hora": "2025-10-25 12:36:57"
+            "cartas_restantes": 4,
+            "mensaje": "PC jugó 4 ROJO",
+            "fecha_hora": "2025-10-25 12:56:03",
+            "id_partida": "20251025125556"
         },
         {
             "turno": 4,
             "carta": [
-                8,
-                "VERDE"
+                2,
+                "AMARILLO"
             ],
             "cartas_restantes": 4,
-            "mensaje": "PC jugó 8 VERDE",
-            "fecha_hora": "2025-10-25 12:36:59"
+            "mensaje": "PC jugó 2 AMARILLO",
+            "fecha_hora": "2025-10-25 12:56:13",
+            "id_partida": "20251025125556"
         },
         {
             "turno": 5,
+            "carta": [
+                4,
+                "AMARILLO"
+            ],
+            "cartas_restantes": 3,
+            "mensaje": "PC jugó 4 AMARILLO",
+            "fecha_hora": "2025-10-25 12:56:17",
+            "id_partida": "20251025125556"
+        },
+        {
+            "turno": 6,
             "carta": [
                 0,
                 "VERDE"
             ],
             "cartas_restantes": 3,
             "mensaje": "PC jugó 0 VERDE",
-            "fecha_hora": "2025-10-25 12:37:03"
-        },
-        {
-            "turno": 6,
-            "carta": [
-                8,
-                "ROJO"
-            ],
-            "cartas_restantes": 2,
-            "mensaje": "PC jugó 8 ROJO",
-            "fecha_hora": "2025-10-25 12:37:06"
+            "fecha_hora": "2025-10-25 12:56:25",
+            "id_partida": "20251025125556"
         },
         {
             "turno": 7,
             "carta": [
-                2,
-                "VERDE"
+                0,
+                "AZUL"
             ],
-            "cartas_restantes": 1,
-            "mensaje": "PC jugó 2 VERDE",
-            "fecha_hora": "2025-10-25 12:37:11"
+            "cartas_restantes": 3,
+            "mensaje": "PC jugó 0 AZUL",
+            "fecha_hora": "2025-10-25 12:56:30",
+            "id_partida": "20251025125556"
         },
         {
             "turno": 8,
             "carta": [
-                8,
-                "AMARILLO"
+                "CAMBIO_COLOR",
+                "ROJO"
             ],
-            "cartas_restantes": 4,
-            "mensaje": "PC jugó 8 AMARILLO",
-            "fecha_hora": "2025-10-25 12:37:22"
+            "cartas_restantes": 6,
+            "mensaje": "PC jugó CAMBIO_COLOR ROJO",
+            "fecha_hora": "2025-10-25 12:57:01",
+            "id_partida": "20251025125651"
         },
         {
             "turno": 9,
             "carta": [
-                "+2",
-                "VERDE"
+                5,
+                "AZUL"
             ],
-            "cartas_restantes": 3,
-            "mensaje": "PC jugó +2 VERDE",
-            "fecha_hora": "2025-10-25 12:37:33"
+            "cartas_restantes": 5,
+            "mensaje": "PC jugó 5 AZUL",
+            "fecha_hora": "2025-10-25 12:57:05",
+            "id_partida": "20251025125651"
         },
         {
             "turno": 10,
             "carta": [
-                "CAMBIO_COLOR",
-                "ROJO"
+                2,
+                "AZUL"
             ],
-            "cartas_restantes": 2,
-            "mensaje": "PC jugó CAMBIO_COLOR ROJO",
-            "fecha_hora": "2025-10-25 12:37:38"
+            "cartas_restantes": 4,
+            "mensaje": "PC jugó 2 AZUL",
+            "fecha_hora": "2025-10-25 12:57:10",
+            "id_partida": "20251025125651"
         },
         {
             "turno": 11,
+            "carta": [
+                "+4",
+                "ROJO"
+            ],
+            "cartas_restantes": 3,
+            "mensaje": "PC jugó +4 ROJO",
+            "fecha_hora": "2025-10-25 12:57:12",
+            "id_partida": "20251025125651"
+        },
+        {
+            "turno": 12,
+            "carta": [
+                "REVERSA",
+                "ROJO"
+            ],
+            "cartas_restantes": 2,
+            "mensaje": "PC jugó REVERSA ROJO",
+            "fecha_hora": "2025-10-25 12:57:27",
+            "id_partida": "20251025125651"
+        },
+        {
+            "turno": 13,
             "carta": [
                 "BLOQUEO",
                 "ROJO"
             ],
             "cartas_restantes": 1,
             "mensaje": "PC jugó BLOQUEO ROJO",
-            "fecha_hora": "2025-10-25 12:37:41"
+            "fecha_hora": "2025-10-25 12:57:28",
+            "id_partida": "20251025125651"
         },
         {
-            "turno": 12,
+            "turno": 14,
             "carta": [
-                3,
+                0,
                 "ROJO"
             ],
             "cartas_restantes": 0,
-            "mensaje": "PC jugó 3 ROJO",
-            "fecha_hora": "2025-10-25 12:37:45"
+            "mensaje": "PC jugó 0 ROJO",
+            "fecha_hora": "2025-10-25 12:57:30",
+            "id_partida": "20251025125651"
         }
     ]
 }
