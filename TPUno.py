@@ -26,9 +26,12 @@ def cargar_historial_json():
 
     with open(ruta, "r", encoding="utf-8") as archivo:
         try:
-            return json.load(archivo)
+            data = json.load(archivo)
+            if "PC" not in data:
+                data["PC"] = []
+            return data
         except json.JSONDecodeError:
-            return {"Usuario": [], "PC": []}
+            return {"PC": []}
 
 def Mazo_Uno(): #crea y devuelve el mazo completo de UNO.
     colores = ["ROJO", "AMARILLO", "VERDE", "AZUL"]
@@ -185,12 +188,14 @@ def elegirColorPc(mazo): #decide color óptimo para la PC.
         return max_color        
 
 
-def turnoUsuario(mazoUsuario, mazo_reparto, mazo_descarte, cartaEnJuego, historial): #lógica del turno del jugador.
+def turnoUsuario(mazoUsuario, mazo_reparto, mazo_descarte, cartaEnJuego, historial, nombre): #lógica del turno del jugador.
     salir = False #Variables de control de turno.
     tomoUnaCarta = False
     opcion = -1
     msgOpcion0 = "0  -> Tomar una carta" #Mensaje inicial para opción 0.
     print("es tu turno! Elegí una opcion o carta del mazo para jugar!") #Mensaje de turno del usuario.
+    if nombre not in historial:
+        historial[nombre] = []
     while not salir: #Loop hasta que el jugador juegue o pase.
         opcion = seleccionar_con_flechas(mazoUsuario, msgOpcion0, cartaEnJuego) #Llama a selección con flechas.
         if opcion < 0 or opcion > len(mazoUsuario): #Valida opción fuera de rango.
@@ -214,11 +219,11 @@ def turnoUsuario(mazoUsuario, mazo_reparto, mazo_descarte, cartaEnJuego, histori
 
                 mazo_descarte.append(cartaEnJuego)  # mover al mazo de descarte
                 del mazoUsuario[opcion]
-                historial["Usuario"].append({
-                "turno": len(historial["Usuario"]) + 1,  
+                historial[nombre].append({
+                "turno": len(historial[nombre]) + 1,
                 "carta": cartaEnJuego,
                 "cartas_restantes": len(mazoUsuario),
-                "mensaje": f"Usuario jugó {cartaEnJuego[0]} {cartaEnJuego[1]}"
+                "mensaje": f"{nombre} jugó {cartaEnJuego[0]} {cartaEnJuego[1]}"
                 })
                 salir = True
             else:
@@ -240,7 +245,7 @@ def turnoUsuario(mazoUsuario, mazo_reparto, mazo_descarte, cartaEnJuego, histori
     return cartaEnJuego, mazoUsuario, mazo_reparto, mazo_descarte, msgOpcion0 #Devuelve estados actualizados.
 
 
-def turnoPC(mazoPC, mazo_reparto, mazo_descarte, cartaEnJuego, historial): #lógica del turno de la computadora.
+def turnoPC(mazoPC, mazo_reparto, mazo_descarte, cartaEnJuego, historial, clave_pc_actual): #lógica del turno de la computadora.
     print("\nTurno de la computadora...") #Mensaje de turno PC.
     jugada_valida = False #Bandera jugada válida.
     i = 0
@@ -257,8 +262,8 @@ def turnoPC(mazoPC, mazo_reparto, mazo_descarte, cartaEnJuego, historial): #lóg
             mazo_descarte.append(cartaEnJuego)
             print(f"\nLa computadora jugó: {cartaEnJuego[0]} {cartaEnJuego[1]}")
             del mazoPC[i]
-            historial["PC"].append({ #Si encuentra: juega, maneja comodín, actualiza mazo y registra historial
-            "turno": len(historial["PC"]) + 1,
+            historial[clave_pc_actual].append({ #Si encuentra: juega, maneja comodín, actualiza mazo y registra historial
+            "turno": len(historial[clave_pc_actual]) + 1,
             "carta": cartaEnJuego,
             "cartas_restantes": len(mazoPC),
             "mensaje": f"PC jugó {cartaEnJuego[0]} {cartaEnJuego[1]}"
@@ -291,7 +296,7 @@ def registrar_usuario(): #pide nombre del jugador.
     while len(nombre.strip()) == 0: #Valida que no esté vacío.
         print("El nombre no puede estar vacío")
         nombre = input("Ingrese su nombre: ")
-    return nombre #Devuelve nombre.
+    return nombre.strip().lower() #Devuelve nombre.
 
 def reglas(): #imprime las reglas básicas del UNO.
     try: 
@@ -317,7 +322,6 @@ def actualizar_puntuacion(nombre, puntos): #actualiza puntaje de un jugador.
     try:
         jugadores_dic[nombre] += puntos 
     except KeyError:
-        print("este jugador no existe, lo agrego")
         jugadores_dic[nombre] = puntos
 
         '''
@@ -327,7 +331,9 @@ def actualizar_puntuacion(nombre, puntos): #actualiza puntaje de un jugador.
             break
 '''
 
-def menu(historial): #menú principal del juego.
+def menu(historial, nombre, clave_pc_actual): #menú principal del juego.
+    if nombre not in historial:
+        historial[nombre] = []
     while True:
         os.system('cls') #Limpia pantalla y muestra título.
         print("\n=== MENÚ PRINCIPAL ===") #Muestra opciones del menú.
@@ -346,19 +352,21 @@ def menu(historial): #menú principal del juego.
             elif opcion == 3:
                 ranking()
             elif opcion == 4:
-                if historial["Usuario"] or historial["PC"]:
+                if historial[nombre] or historial["PC"]:
                     print("\n=== HISTORIAL DE JUGADAS ===") #Muestra historial de jugadas.
 
                     log_total = []
-                    for jugada in historial["Usuario"]:
-                        log_total.append(("Usuario", jugada))
-                    for jugada in historial["PC"]:
+                    for jugada in historial[nombre]:
+                        log_total.append((nombre, jugada)) 
+                    for jugada in historial.get(clave_pc_actual,[]):
                         log_total.append(("PC", jugada))
-                    
+
+                    log_total.sort(key=lambda x: x[1]['turno'])
+
                     for jugador, jugada in log_total:
-                        print(f"{jugada['mensaje']} | Cartas restantes: {jugada['cartas_restantes']}")
+                        print(f"[{jugador} - Turno {jugada['turno']}] {jugada['mensaje']} | Cartas restantes: {jugada['cartas_restantes']}")
                 else:
-                    print("\nNo hay historial de partidas todavía.") #Si no hay historial, avisa.
+                    print(f"\nNo hay historial de partidas de {nombre} todavía.") #Si no hay historial, avisa.
                 input("\nPresione Enter para continuar...")
             elif opcion == 5:
                 print("\n¡Gracias por jugar!")
@@ -376,17 +384,19 @@ def iniciar_juego(): #controla todo el flujo del juego.
     nombre_usuario = registrar_usuario() #Registra usuario.
     print(f"\n¡Bienvenido {nombre_usuario}!") #Mensaje de bienvenida.
     input("Presione Enter para continuar...") #Pausa.
-    historial = { #Inicializa historial vacío.
-    "Usuario": [],
-    "PC": []
-    }
     historial = cargar_historial_json()
+    clave_pc_actual = f"PC_VS_{nombre_usuario}"
     while True: #Loop principal del juego.
-        opcion = menu(historial)
+        opcion = menu(historial, nombre_usuario, clave_pc_actual)
         if opcion == False:
             guardar_historial_json(historial)
             break
         elif opcion == True: #Si usuario elige jugar: prepara mazos, reparte y elige carta inicial.
+            if nombre_usuario not in historial:
+                historial[nombre_usuario] = []
+            historial[clave_pc_actual] = []
+            historial[nombre_usuario] = []
+
             mazo_general = Mazo_Uno() # Mazo original
             mazo_reparto = mazo_general.copy() # Copio el original para modificarlo
             random.shuffle(mazo_reparto) # Barajo el mazo a repartir
@@ -461,12 +471,12 @@ def iniciar_juego(): #controla todo el flujo del juego.
                 if turno == 0:
 
                     cartaEnJuego, mazoUsuario, mazo_reparto, mazo_descarte, msgOpcion0 = turnoUsuario(
-                        mazoUsuario, mazo_reparto, mazo_descarte, cartaEnJuego, historial)
+                        mazoUsuario, mazo_reparto, mazo_descarte, cartaEnJuego, historial, nombre_usuario)
                     turno = 1
                 #Lógica del turno PC.
                 else:
                     cartaEnJuego, mazoPC, mazo_reparto, mazo_descarte = turnoPC(
-                        mazoPC, mazo_reparto, mazo_descarte, cartaEnJuego, historial)
+                        mazoPC, mazo_reparto, mazo_descarte, cartaEnJuego, historial, clave_pc_actual)
                     turno = 0
 
                 # Detectar efecto de la última carta jugada
