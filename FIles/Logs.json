@@ -1,0 +1,132 @@
+{
+    "Usuario": [
+        {
+            "turno": 1,
+            "carta": [
+                0,
+                "ROJO"
+            ],
+            "cartas_restantes": 6,
+            "mensaje": "Usuario jugó 0 ROJO"
+        },
+        {
+            "turno": 2,
+            "carta": [
+                "+4",
+                "AMARILLO"
+            ],
+            "cartas_restantes": 5,
+            "mensaje": "Usuario jugó +4 AMARILLO"
+        },
+        {
+            "turno": 3,
+            "carta": [
+                6,
+                "AMARILLO"
+            ],
+            "cartas_restantes": 4,
+            "mensaje": "Usuario jugó 6 AMARILLO"
+        },
+        {
+            "turno": 4,
+            "carta": [
+                3,
+                "AMARILLO"
+            ],
+            "cartas_restantes": 3,
+            "mensaje": "Usuario jugó 3 AMARILLO"
+        },
+        {
+            "turno": 5,
+            "carta": [
+                "+2",
+                "AZUL"
+            ],
+            "cartas_restantes": 3,
+            "mensaje": "Usuario jugó +2 AZUL"
+        },
+        {
+            "turno": 6,
+            "carta": [
+                4,
+                "AZUL"
+            ],
+            "cartas_restantes": 2,
+            "mensaje": "Usuario jugó 4 AZUL"
+        },
+        {
+            "turno": 7,
+            "carta": [
+                9,
+                "AMARILLO"
+            ],
+            "cartas_restantes": 1,
+            "mensaje": "Usuario jugó 9 AMARILLO"
+        },
+        {
+            "turno": 8,
+            "carta": [
+                5,
+                "AMARILLO"
+            ],
+            "cartas_restantes": 0,
+            "mensaje": "Usuario jugó 5 AMARILLO"
+        }
+    ],
+    "PC": [
+        {
+            "turno": 1,
+            "carta": [
+                1,
+                "ROJO"
+            ],
+            "cartas_restantes": 6,
+            "mensaje": "PC jugó 1 ROJO"
+        },
+        {
+            "turno": 2,
+            "carta": [
+                8,
+                "AMARILLO"
+            ],
+            "cartas_restantes": 9,
+            "mensaje": "PC jugó 8 AMARILLO"
+        },
+        {
+            "turno": 3,
+            "carta": [
+                "BLOQUEO",
+                "AMARILLO"
+            ],
+            "cartas_restantes": 8,
+            "mensaje": "PC jugó BLOQUEO AMARILLO"
+        },
+        {
+            "turno": 4,
+            "carta": [
+                "BLOQUEO",
+                "AZUL"
+            ],
+            "cartas_restantes": 7,
+            "mensaje": "PC jugó BLOQUEO AZUL"
+        },
+        {
+            "turno": 5,
+            "carta": [
+                7,
+                "AZUL"
+            ],
+            "cartas_restantes": 6,
+            "mensaje": "PC jugó 7 AZUL"
+        },
+        {
+            "turno": 6,
+            "carta": [
+                5,
+                "AMARILLO"
+            ],
+            "cartas_restantes": 5,
+            "mensaje": "PC jugó 5 AMARILLO"
+        }
+    ]
+}
