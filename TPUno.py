@@ -3,6 +3,7 @@ import os #Importa la librería os para ejecutar comandos del sistema para limpi
 import msvcrt  # Para captura de teclas en Windows
 from colorama import init, Fore, Style  #Inicializa colorama con auto-reset para que los colores no se propaguen.
 import json
+from datetime import datetime
 init(autoreset=True)
 
 jugadores_dic = { #Diccionario jugadores_dic con jugadores y sus puntajes actuales.
@@ -213,7 +214,7 @@ def turnoUsuario(mazoUsuario, mazo_reparto, mazo_descarte, cartaEnJuego, histori
             opcion = opcion - 1
             if validarCarta(cartaEnJuego, mazoUsuario[opcion]): #Si juega una carta válida: actualiza carta en juego, pide color si comodín, descarta y registra historial.
                 cartaEnJuego = mazoUsuario[opcion]
-
+                fecha_hora_actual = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 if cartaEnJuego[1] == "NEGRO" :
                   cartaEnJuego[1] = elegir_color()
 
@@ -223,7 +224,8 @@ def turnoUsuario(mazoUsuario, mazo_reparto, mazo_descarte, cartaEnJuego, histori
                 "turno": len(historial[nombre]) + 1,
                 "carta": cartaEnJuego,
                 "cartas_restantes": len(mazoUsuario),
-                "mensaje": f"{nombre} jugó {cartaEnJuego[0]} {cartaEnJuego[1]}"
+                "mensaje": f"{nombre} jugó {cartaEnJuego[0]} {cartaEnJuego[1]}",
+                "fecha_hora": fecha_hora_actual
                 })
                 salir = True
             else:
@@ -253,6 +255,7 @@ def turnoPC(mazoPC, mazo_reparto, mazo_descarte, cartaEnJuego, historial, clave_
         if validarCarta(cartaEnJuego, mazoPC[i]):
             # La PC juega mazoPC[i]
             carta_jugada = mazoPC[i]
+            fecha_hora_actual = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             # Si es comodín, elegir color
             if carta_jugada[1] == "NEGRO":
                 # asignamos color al comodín (modificar una copia para no corromper la mano)
@@ -266,7 +269,8 @@ def turnoPC(mazoPC, mazo_reparto, mazo_descarte, cartaEnJuego, historial, clave_
             "turno": len(historial[clave_pc_actual]) + 1,
             "carta": cartaEnJuego,
             "cartas_restantes": len(mazoPC),
-            "mensaje": f"PC jugó {cartaEnJuego[0]} {cartaEnJuego[1]}"
+            "mensaje": f"PC jugó {cartaEnJuego[0]} {cartaEnJuego[1]}",
+            "fecha_hora": fecha_hora_actual
             })
             jugada_valida = True
         else:
@@ -364,7 +368,7 @@ def menu(historial, nombre, clave_pc_actual): #menú principal del juego.
                     log_total.sort(key=lambda x: x[1]['turno'])
 
                     for jugador, jugada in log_total:
-                        print(f"[{jugador} - Turno {jugada['turno']}] {jugada['mensaje']} | Cartas restantes: {jugada['cartas_restantes']}")
+                        print(f"{jugada['fecha_hora']} - [{jugador} - Turno {jugada['turno']}] {jugada['mensaje']} | Cartas restantes: {jugada['cartas_restantes']}")
                 else:
                     print(f"\nNo hay historial de partidas de {nombre} todavía.") #Si no hay historial, avisa.
                 input("\nPresione Enter para continuar...")
@@ -505,4 +509,3 @@ def iniciar_juego(): #controla todo el flujo del juego.
             input("\nPresione Enter para continuar...") #Pausa.
 
 iniciar_juego() #para comenzar.
-
