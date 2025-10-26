@@ -1,9 +1,8 @@
-
-{ 
-"thomas": 70, 
-"vera": 70,
-"fran": 65,
-"augus": 55,
-"julia":99999
+{
+    "thomas": 70,
+    "vera": 70,
+    "fran": 65,
+    "augus": 55,
+    "julia": 99999,
+    "carmelo": 15
 }
-

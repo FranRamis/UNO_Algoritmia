@@ -12,7 +12,32 @@ jugadores_dic = { #Diccionario jugadores_dic con jugadores y sus puntajes actual
 "fran": 65,
 "augus": 55
 }
-print("----------------------------------------------aca arranca ---------------------------")
+
+
+
+def leer_archivo_json(nombre_archivo):
+    ruta = os.path.join(os.path.dirname(__file__), "FIles", nombre_archivo)
+    
+    try:
+        with open(ruta, "r", encoding="utf-8") as archivo:
+            arch= json.load(archivo)
+            print ( f"Archivo '{nombre_archivo}' leído correctamente.")
+            return arch
+    except Exception as e:
+        print(f"Error inesperado al leer '{nombre_archivo}': {e}")
+        return {}
+
+def guardar_archivo_json(nombre_archivo, datos):
+    ruta = os.path.join(os.path.dirname(__file__), "FIles", nombre_archivo)
+    
+    try:
+        with open(ruta, "w", encoding="utf-8") as archivo:
+            json.dump(datos, archivo, indent=4, ensure_ascii=False)
+            print(f"Archivo '{nombre_archivo}' guardado correctamente.")
+    except Exception as e:
+        print(f"Error inesperado al guardar '{nombre_archivo}': {e}")
+
+jugadores_dic = leer_archivo_json("ranking.json")
 
 def guardar_historial_json(historial):
     ruta = os.path.join(os.path.dirname(__file__), "FIles", "Logs.json")
@@ -33,6 +58,9 @@ def cargar_historial_json():
             return data
         except json.JSONDecodeError:
             return {"PC": []}
+
+
+
 
 def Mazo_Uno(): #crea y devuelve el mazo completo de UNO.
     colores = ["ROJO", "AMARILLO", "VERDE", "AZUL"]
@@ -324,18 +352,14 @@ def ranking(): #muestra el ranking de jugadores.
     input("\nPresione Enter para continuar...") #Pausa.
 
 def actualizar_puntuacion(nombre, puntos): #actualiza puntaje de un jugador.
-    nombre_lower = nombre.lower() #Pasa a minúsculas el nombre.
+    nombre_lower = nombre.lower() 
     try:
-        jugadores_dic[nombre] += puntos 
+        jugadores_dic[nombre_lower] += puntos 
     except KeyError:
-        jugadores_dic[nombre] = puntos
+        jugadores_dic[nombre_lower] = puntos
+    guardar_archivo_json("ranking.json", jugadores_dic)
 
-        '''
-    for jugador_dic in jugadores_dic: #Busca jugador y suma puntos.
-        if jugador_dic.lower() == nombre_lower:
-            jugadores_dic[jugador_dic] += puntos
-            break
-'''
+
 
 def menu(historial, nombre, clave_pc_actual): #menú principal del juego.
     if nombre not in historial:
@@ -425,7 +449,8 @@ def iniciar_juego(): #controla todo el flujo del juego.
             mazoUsuario, mazo_reparto, mazo_descarte = repartir(7, mazo_reparto, mazo_descarte)
             mazoPC, mazo_reparto, mazo_descarte = repartir(7, mazo_reparto, mazo_descarte)
             cartaEnJuego, mazo_reparto, mazo_descarte = repartir(1, mazo_reparto, mazo_descarte)
-            
+            mazoUsuario = [[10,"ROJO"]]      
+            cartaEnJuego = [[10,"ROJO"]]  
             while cartaEnJuego[0][1] == "NEGRO":
                   cartaEnJuego, mazo_reparto, mazo_descarte = repartir(1, mazo_reparto, mazo_descarte)        
             cartaEnJuego = cartaEnJuego[0]
