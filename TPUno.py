@@ -13,11 +13,8 @@ jugadores_dic = { #Diccionario jugadores_dic con jugadores y sus puntajes actual
 "augus": 55
 }
 
-
-
 def leer_archivo_json(nombre_archivo):
     ruta = os.path.join(os.path.dirname(__file__), "FIles", nombre_archivo)
-    
     try:
         with open(ruta, "r", encoding="utf-8") as archivo:
             arch= json.load(archivo)
@@ -38,29 +35,6 @@ def guardar_archivo_json(nombre_archivo, datos):
         print(f"Error inesperado al guardar '{nombre_archivo}': {e}")
 
 jugadores_dic = leer_archivo_json("ranking.json")
-
-def guardar_historial_json(historial):
-    ruta = os.path.join(os.path.dirname(__file__), "FIles", "Logs.json")
-
-    with open(ruta, "w", encoding="utf-8") as archivo:
-        json.dump(historial, archivo, indent=4, ensure_ascii=False)
-
-    print("\nArchivo 'Logs.json' actualizado correctamente.")
-
-def cargar_historial_json():
-    ruta = os.path.join(os.path.dirname(__file__), "FIles", "Logs.json")
-
-    with open(ruta, "r", encoding="utf-8") as archivo:
-        try:
-            data = json.load(archivo)
-            if "PC" not in data:
-                data["PC"] = []
-            return data
-        except json.JSONDecodeError:
-            return {"PC": []}
-
-
-
 
 def Mazo_Uno(): #crea y devuelve el mazo completo de UNO.
     colores = ["ROJO", "AMARILLO", "VERDE", "AZUL"]
@@ -425,12 +399,12 @@ def iniciar_juego(): #controla todo el flujo del juego.
     nombre_usuario = registrar_usuario() #Registra usuario.
     print(f"\n¡Bienvenido {nombre_usuario}!") #Mensaje de bienvenida.
     input("Presione Enter para continuar...") #Pausa.
-    historial = cargar_historial_json() #Cargo historial de partidas
+    historial = leer_archivo_json("Logs.json") #Cargo historial de partidas
     clave_pc_actual = f"PC_VS_{nombre_usuario}" 
     while True: #Loop principal del juego.
         opcion = menu(historial, nombre_usuario, clave_pc_actual)
         if opcion == False:
-            guardar_historial_json(historial)
+            guardar_archivo_json("Logs.json", historial)
             break
         elif opcion == True: #Si usuario elige jugar: prepara mazos, reparte y elige carta inicial.
             id_partida = datetime.now().strftime("%Y%m%d%H%M%S") 
@@ -449,8 +423,8 @@ def iniciar_juego(): #controla todo el flujo del juego.
             mazoUsuario, mazo_reparto, mazo_descarte = repartir(7, mazo_reparto, mazo_descarte)
             mazoPC, mazo_reparto, mazo_descarte = repartir(7, mazo_reparto, mazo_descarte)
             cartaEnJuego, mazo_reparto, mazo_descarte = repartir(1, mazo_reparto, mazo_descarte)
-            mazoUsuario = [[10,"ROJO"]]      
-            cartaEnJuego = [[10,"ROJO"]]  
+           # mazoUsuario = [[10,"ROJO"]]      
+            #cartaEnJuego = [[10,"ROJO"]]  
             while cartaEnJuego[0][1] == "NEGRO":
                   cartaEnJuego, mazo_reparto, mazo_descarte = repartir(1, mazo_reparto, mazo_descarte)        
             cartaEnJuego = cartaEnJuego[0]
@@ -546,7 +520,7 @@ def iniciar_juego(): #controla todo el flujo del juego.
             else:
                 print("¡Ganó la computadora!")
                 actualizar_puntuacion(nombre_usuario, -5)
-            guardar_historial_json(historial)
+            guardar_archivo_json("Logs.json", historial)
             input("\nPresione Enter para continuar...") #Pausa.
 
 iniciar_juego() #para comenzar.

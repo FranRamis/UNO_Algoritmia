@@ -165,6 +165,28 @@
             "mensaje": "fran jugó 4 AZUL",
             "fecha_hora": "2025-10-25 12:57:12",
             "id_partida": "20251025125651"
+        },
+        {
+            "turno": 16,
+            "carta": [
+                10,
+                "ROJO"
+            ],
+            "cartas_restantes": 0,
+            "mensaje": "fran jugó 10 ROJO",
+            "fecha_hora": "2025-10-27 20:01:54",
+            "id_partida": "20251027200153"
+        },
+        {
+            "turno": 17,
+            "carta": [
+                10,
+                "ROJO"
+            ],
+            "cartas_restantes": 0,
+            "mensaje": "fran jugó 10 ROJO",
+            "fecha_hora": "2025-10-27 20:03:40",
+            "id_partida": "20251027200339"
         }
     ],
     "PC_VS_fran": [
