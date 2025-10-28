@@ -1,8 +1,9 @@
 {
     "thomas": 70,
-    "vera": 70,
-    "fran": 110,
+    "vera": 95,
+    "fran": 115,
     "augus": 55,
     "julia": 99999,
-    "carmelo": 15
+    "carmelo": 15,
+    "nuevo_jugador": 20
 }
