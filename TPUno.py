@@ -516,7 +516,8 @@ def iniciar_juego(): #controla todo el flujo del juego.
             # Fin del juego: declara ganador y actualiza puntuación.
             if len(mazoUsuario) == 0:
                 print("¡Ganaste!")
-                actualizar_puntuacion(nombre_usuario, 15)
+                puntuacion=10*len(mazoPC)
+                actualizar_puntuacion(nombre_usuario, puntuacion)
             else:
                 print("¡Ganó la computadora!")
                 actualizar_puntuacion(nombre_usuario, -5)
