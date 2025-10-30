@@ -99,7 +99,7 @@ def validarCarta(cartaEnJuego, cartaUsuario): #verifica si una carta es jugable.
         check = True  
     elif (cartaUsuario[1] == "NEGRO") : #Valida si la carta es negra (comodín).
         check = True 
-    elif (cartaUsuario[1] in ["+2", "BLOQUEO", "REVERSA", "+4"]) and cartaEnJuego[1] == cartaUsuario[1]: #Valida si ambas cartas son del mismo tipo especial.
+    elif (cartaUsuario[0] in ["+2", "BLOQUEO", "REVERSA", "+4"]) and cartaEnJuego[0] == cartaUsuario[0]: #Valida si ambas cartas son del mismo tipo especial.
         check = True
     return check #Devuelve el resultado.
 
@@ -395,42 +395,40 @@ def menu(historial, nombre, clave_pc_actual): #menú principal del juego.
             input("Presione Enter para continuar...")
 
 # ================== Juego principal ==================
-def iniciar_juego(): #controla todo el flujo del juego.
-    nombre_usuario = registrar_usuario() #Registra usuario.
-    print(f"\n¡Bienvenido {nombre_usuario}!") #Mensaje de bienvenida.
-    input("Presione Enter para continuar...") #Pausa.
-    historial = leer_archivo_json("Logs.json") #Cargo historial de partidas
-    clave_pc_actual = f"PC_VS_{nombre_usuario}" 
-    while True: #Loop principal del juego.
+def iniciar_juego():
+    nombre_usuario = registrar_usuario()
+    print(f"\n¡Bienvenido {nombre_usuario}!")
+    input("Presione Enter para continuar...")
+    historial = leer_archivo_json("Logs.json") or {}
+    clave_pc_actual = f"PC_VS_{nombre_usuario}"
+    while True:
         opcion = menu(historial, nombre_usuario, clave_pc_actual)
         if opcion == False:
             guardar_archivo_json("Logs.json", historial)
             break
-        elif opcion == True: #Si usuario elige jugar: prepara mazos, reparte y elige carta inicial.
-            id_partida = datetime.now().strftime("%Y%m%d%H%M%S") 
-
+        elif opcion == True:
+            id_partida = datetime.now().strftime("%Y%m%d%H%M%S")
             if nombre_usuario not in historial:
                 historial[nombre_usuario] = []
-
             if clave_pc_actual not in historial:
                 historial[clave_pc_actual] = []
 
-            mazo_general = Mazo_Uno() # Mazo original
-            mazo_reparto = mazo_general.copy() # Copio el original para modificarlo
-            random.shuffle(mazo_reparto) # Barajo el mazo a repartir
-            mazo_descarte = [] #genero un mazo para descartar cartas vacio.
+            mazo_general = Mazo_Uno()
+            mazo_reparto = mazo_general.copy()
+            random.shuffle(mazo_reparto)
+            mazo_descarte = []
 
             mazoUsuario, mazo_reparto, mazo_descarte = repartir(7, mazo_reparto, mazo_descarte)
             mazoPC, mazo_reparto, mazo_descarte = repartir(7, mazo_reparto, mazo_descarte)
             cartaEnJuego, mazo_reparto, mazo_descarte = repartir(1, mazo_reparto, mazo_descarte)
-           # mazoUsuario = [[10,"ROJO"]]      
-            #cartaEnJuego = [[10,"ROJO"]]  
             while cartaEnJuego[0][1] == "NEGRO":
-                  cartaEnJuego, mazo_reparto, mazo_descarte = repartir(1, mazo_reparto, mazo_descarte)        
+                  cartaEnJuego, mazo_reparto, mazo_descarte = repartir(1, mazo_reparto, mazo_descarte)
             cartaEnJuego = cartaEnJuego[0]
-            
+
             turno = 0  # 0 = Usuario, 1 = PC
             efecto_pendiente = None
+            prev_carta = None 
+
             while len(mazoPC) > 0 and len(mazoUsuario) > 0:
                 os.system('cls')
                 print(f"\nJugador: {nombre_usuario}")
@@ -444,7 +442,7 @@ def iniciar_juego(): #controla todo el flujo del juego.
                 }.get(color, Style.RESET_ALL)
                 print(f"\nLa carta en juego es: {color_print}{numero} {color}{Style.RESET_ALL}")
 
-                # Aplicar efectos pendientes
+                # Aplicar efectos pendientes (si los hay)
                 if efecto_pendiente == "MAS2":
                     if turno == 0:
                         print("¡Efecto +2! El jugador toma 2 cartas y pierde el turno.")
@@ -458,7 +456,9 @@ def iniciar_juego(): #controla todo el flujo del juego.
                         turno = 0
                     efecto_pendiente = None
                     input("\nPresione Enter para continuar...")
+                    prev_carta = cartaEnJuego[:]  
                     continue
+
                 if efecto_pendiente == "MAS4":
                     if turno == 0:
                         print("¡Efecto +4! El jugador toma 4 cartas y pierde el turno.")
@@ -472,48 +472,53 @@ def iniciar_juego(): #controla todo el flujo del juego.
                         turno = 0
                     efecto_pendiente = None
                     input("\nPresione Enter para continuar...")
+                    prev_carta = cartaEnJuego[:]
                     continue
-                elif efecto_pendiente == "BLOQUEO":
+
+                if efecto_pendiente == "BLOQUEO":
                     print("¡BLOQUEO! Se salta un turno.")
                     turno = 1 - turno
                     efecto_pendiente = None
                     input("\nPresione Enter para continuar...")
+                    prev_carta = cartaEnJuego[:]
                     continue
-                elif efecto_pendiente == "REVERSA":
+
+                if efecto_pendiente == "REVERSA":
                     print("¡Reversa! Se invierte el turno (en dos jugadores equivale a saltar turno).")
                     turno = 1 - turno
                     efecto_pendiente = None
                     input("\nPresione Enter para continuar...")
+                    prev_carta = cartaEnJuego[:]
                     continue
 
-                # Lógica del turno usuario.
+                # Turnos
                 if turno == 0:
-
                     cartaEnJuego, mazoUsuario, mazo_reparto, mazo_descarte, msgOpcion0 = turnoUsuario(
                         mazoUsuario, mazo_reparto, mazo_descarte, cartaEnJuego, historial, nombre_usuario, id_partida)
                     turno = 1
-                #Lógica del turno PC.
                 else:
                     cartaEnJuego, mazoPC, mazo_reparto, mazo_descarte = turnoPC(
                         mazoPC, mazo_reparto, mazo_descarte, cartaEnJuego, historial, clave_pc_actual, id_partida)
                     turno = 0
 
-                # Detectar efecto de la última carta jugada
-
-                if msgOpcion0 != "0  -> Pasar turno":
+                
+                if prev_carta is None or cartaEnJuego != prev_carta:
                     if cartaEnJuego[0] == "+2":
-                            efecto_pendiente = "MAS2"
+                        efecto_pendiente = "MAS2"
                     elif cartaEnJuego[0] == "+4":
-                            efecto_pendiente = "MAS4"
+                        efecto_pendiente = "MAS4"
                     elif cartaEnJuego[0] == "BLOQUEO":
-                            efecto_pendiente = "BLOQUEO"
+                        efecto_pendiente = "BLOQUEO"
                     elif cartaEnJuego[0] == "REVERSA":
-                            efecto_pendiente = "REVERSA"
-                else:
-                    efecto_pendiente=None
+                        efecto_pendiente = "REVERSA"
+                    else:
+                        efecto_pendiente = None
+                else:  
+                    efecto_pendiente = None
 
+                prev_carta = cartaEnJuego[:]
 
-            # Fin del juego: declara ganador y actualiza puntuación.
+            # Fin del juego
             if len(mazoUsuario) == 0:
                 print("¡Ganaste!")
                 puntuacion=10*len(mazoPC)
@@ -522,6 +527,6 @@ def iniciar_juego(): #controla todo el flujo del juego.
                 print("¡Ganó la computadora!")
                 actualizar_puntuacion(nombre_usuario, -5)
             guardar_archivo_json("Logs.json", historial)
-            input("\nPresione Enter para continuar...") #Pausa.
+            input("\nPresione Enter para continuar...")
 
 iniciar_juego() #para comenzar.
