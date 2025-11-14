@@ -2,7 +2,7 @@
 El objetivo principal del juego Uno es deshacerse de todas las cartas que se reparten inicialmente a cada jugador, 
 que son siete, y ser el primero en quedarse sin cartas.
 Para lograrlo, los jugadores deben emparejar una carta de su mano con la carta superior de la pila de descarte en cuanto a color, 
-número o símbolo.
+numero o simbolo.
 Si un jugador no puede jugar ninguna carta, debe robar una del mazo hasta que pueda hacerlo.
 El juego incluye cartas especiales con efectos específicos: 
 - las cartas "mas dos" obligan al siguiente jugador a robar dos cartas y perder su turno.
@@ -10,10 +10,9 @@ El juego incluye cartas especiales con efectos específicos:
 - las cartas "bloqueo" hacen que el siguiente jugador pierda su turno.
 - los comodines "cambio color" permiten cambiar el color en juego.
 - y los comodines "mas cuatro" obligan al siguiente jugador a robar cuatro cartas y perder su turno, 
-El ganador de cada partida suma 10 puntos por cada uno de las cartas que quedan en las manos de los demás jugadores.
+El ganador de cada partida suma 10 puntos por cada uno de las cartas que quedan en las manos de los demas jugadores.
 Y si pierdes contra la computadora, a tu ranking se le restan 5 puntos.
-
-En caso de que el mazo se agote durante la partida, se barajan las cartas de la pila de descarte (excepto la última) para formar un nuevo mazo.
+En caso de que el mazo se agote durante la partida, se barajan las cartas de la pila de descarte (excepto la ultima) para formar un nuevo mazo.
 
 === COMO JUGAR ===
 1. Para iiciar partida ingrese el numero 1 en el menu.
