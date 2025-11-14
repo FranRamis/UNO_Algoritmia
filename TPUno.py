@@ -273,7 +273,7 @@ def turnoPC(mazoPC, mazo_reparto, mazo_descarte, cartaEnJuego, historial, clave_
                 "VERDE": Fore.GREEN,
                 "AMARILLO": Fore.YELLOW
             }.get(color, Style.RESET_ALL)
-            print(f"\n¡La computadora jugó la carta que tomó! {color_print}{numero} {color}{Style.RESET_ALL}")
+            print(f"\nLa computadora jugó: {color_print}{numero} {color}{Style.RESET_ALL}")
             del mazoPC[i]
             historial[clave_pc_actual].append({ #Si encuentra: juega, maneja comodín, actualiza mazo y registra historial
             "turno": len(historial[clave_pc_actual]) + 1,
@@ -297,7 +297,14 @@ def turnoPC(mazoPC, mazo_reparto, mazo_descarte, cartaEnJuego, historial, clave_
                 carta = [carta[0], elegirColorPc(mazoPC)]
             cartaEnJuego = carta
             mazo_descarte.append(carta)
-            print("¡La computadora jugó la carta que tomó! ", cartaEnJuego[0], cartaEnJuego[1])
+            numero, color = cartaEnJuego
+            color_print = {
+                "ROJO": Fore.RED,
+                "AZUL": Fore.BLUE,
+                "VERDE": Fore.GREEN,
+                "AMARILLO": Fore.YELLOW
+            }.get(color, Style.RESET_ALL)
+            print(f"\n¡La computadora jugó la carta que tomó! {color_print}{numero} {color}{Style.RESET_ALL}")
         else:
             mazoPC.append(carta)
             print("La computadora no pudo jugar. Pasa el turno.")
