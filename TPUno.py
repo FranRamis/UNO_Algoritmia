@@ -45,6 +45,9 @@ def guardar_archivo_json(nombre_archivo, datos):
 jugadores_dic = leer_archivo_json("ranking.json")
 
 def Mazo_Uno(): #crea y devuelve el mazo completo de UNO.
+    '''
+    Mazo_Uno se encarga de generar un mazo de cartas en una variable de tipo matriz, que contiene todas las cartas simples, y especiales; devolviendo asi una matriz o lista de listas.
+    '''
     colores = ["ROJO", "AMARILLO", "VERDE", "AZUL"]
     mazo = []
 
