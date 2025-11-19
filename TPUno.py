@@ -14,6 +14,10 @@ jugadores_dic = { #Diccionario jugadores_dic con jugadores y sus puntajes actual
 }
 
 def leer_archivo_json(nombre_archivo):
+    '''
+    Leer_archivo_json se encarga de la lactura de diversos archivos externos que se utilizan durante toda la ejecucion del codigo.
+    Utiliza el nombre del archivo que buscara en la carpeta Files.
+    '''
     ruta = os.path.join(os.path.dirname(__file__), "FIles", nombre_archivo)
     try:
         with open(ruta, "r", encoding="utf-8") as archivo:
