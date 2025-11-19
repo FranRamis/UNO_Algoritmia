@@ -69,6 +69,10 @@ def Mazo_Uno(): #crea y devuelve el mazo completo de UNO.
 
 # Nueva función de repartir con mazo de reparto y descarte
 def repartir(cant, mazo_reparto, mazo_descarte):
+    '''
+    repartir se encarga de crear una lista de cartas segun los parametros que reibe, en este caso la cantidad de cartas que debe tener la lista, el mazo_reparto, que es de donde extraera 
+    los valores que apendea a la lista del reparto, y un mazo_descarte que es el que contenera las cartas ya repartdas o "usadas".
+    '''
     lista = []
     for i in range(cant): #reparte cartas desde el mazo de reparto.
         if len(mazo_reparto) == 0:
