@@ -29,6 +29,10 @@ def leer_archivo_json(nombre_archivo):
         return {}
 
 def guardar_archivo_json(nombre_archivo, datos):
+    '''
+    guardar_arcivo_json se encarga de abrir o crear diversos archivos externos que se escribirar durante la ejecucion, 
+    y se encarga de guardarlos, utiliza el nomre del archivo que buscara en la carpeta Files.
+    '''
     ruta = os.path.join(os.path.dirname(__file__), "FIles", nombre_archivo)
     
     try:
