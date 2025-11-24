@@ -362,6 +362,34 @@ def actualizar_puntuacion(nombre, puntos): #actualiza puntaje de un jugador.
         jugadores_dic[nombre_lower] = puntos
     guardar_archivo_json("ranking.json", jugadores_dic)
 
+def historial_partidas(historial, nombre, clave_pc_actual):
+    if historial.get(nombre) or historial.get(clave_pc_actual):
+        print("\n=== HISTORIAL DE JUGADAS ===")
+        
+        log_total = []
+        for jugada in historial.get(nombre, []):
+            if 'id_partida' in jugada:
+                log_total.append((nombre, jugada))
+        for jugada in historial.get(clave_pc_actual, []):
+            if 'id_partida' in jugada:
+                log_total.append(("PC", jugada))
+        
+        log_total.sort(key=lambda x: x[1]['fecha_hora'])
+        
+        id_partida_anterior = None
+        for jugador, jugada in log_total:
+            id_partida_actual = jugada['id_partida']
+            
+            if id_partida_anterior is not None and id_partida_actual != id_partida_anterior:
+                print("-------------------- FIN DE PARTIDA --------------------")
+            
+            print(f"{jugada['fecha_hora']} - {jugada['mensaje']} | Cartas restantes: {jugada['cartas_restantes']}")
+            
+            id_partida_anterior = id_partida_actual
+    else:
+        print(f"\nNo hay historial de partidas de {nombre} todavía.")
+    
+    input("\nPresione Enter para continuar...")
 
 
 def menu(historial, nombre, clave_pc_actual): #menú principal del juego.
@@ -385,33 +413,7 @@ def menu(historial, nombre, clave_pc_actual): #menú principal del juego.
             elif opcion == 3:
                 ranking()
             elif opcion == 4:
-                if historial[nombre] or historial["PC"]:
-                    print("\n=== HISTORIAL DE JUGADAS ===") #Muestra historial de jugadas.
-
-                    log_total = []
-                    for jugada in historial[nombre]:
-                        if 'id_partida' in jugada:
-                            log_total.append((nombre, jugada)) 
-                    for jugada in historial.get(clave_pc_actual,[]):
-                        if 'id_partida' in jugada:
-                            log_total.append(("PC", jugada))
-
-                    log_total.sort(key=lambda x: x[1]['fecha_hora'])
-
-                    id_partida_anterior = None
-                    for jugador, jugada in log_total:
-                        
-                        id_partida_actual = jugada['id_partida']
-                        
-                        if id_partida_anterior is not None and id_partida_actual != id_partida_anterior:
-                            print("-------------------- FIN DE PARTIDA --------------------")
-
-                        print(f"{jugada['fecha_hora']} - {jugada['mensaje']} | Cartas restantes: {jugada['cartas_restantes']}")
-                        
-                        id_partida_anterior = id_partida_actual
-                else:
-                    print(f"\nNo hay historial de partidas de {nombre} todavía.")
-                input("\nPresione Enter para continuar...")
+                historial_partidas(historial, nombre, clave_pc_actual)
             elif opcion == 5:
                 print("\n¡Gracias por jugar!")
                 return False

@@ -374,10 +374,52 @@ def reglas(): #imprime las reglas básicas del UNO.
     except FileNotFoundError:
         text_widget.insert("1.0", "Archivo de reglas no encontrado.")
     
-    text_widget.config(state=tk.DISABLED)
+    text_widget.config(state=tk.DISABLED, spacing1=5, spacing3=5)
+
+def historial(nombre):
+    """Muestra el historial de partidas en una ventana nueva."""
+    historial_data = leer_archivo_json("Logs.json")
+    clave_pc = f"PC_VS_{nombre}"
+    
+    ventana_historial = tk.Toplevel(ventana)
+    ventana_historial.title("Historial de Partidas")
+    ventana_historial.geometry("700x600")
+    ventana_historial.configure(bg=AMARILLO)
+    
+    text_widget = tk.Text(ventana_historial, font=("Courier New", 10), wrap=tk.WORD, bg=AMARILLO)
+    text_widget.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+    
+    # Verificar si hay historial
+    if historial_data.get(nombre) or historial_data.get(clave_pc):
+        text_widget.insert("1.0", "=== HISTORIAL DE JUGADAS ===\n\n")
+        
+        log_total = []
+        for jugada in historial_data.get(nombre, []):
+            if 'id_partida' in jugada:
+                log_total.append((nombre, jugada))
+        for jugada in historial_data.get(clave_pc, []):
+            if 'id_partida' in jugada:
+                log_total.append(("PC", jugada))
+        
+        log_total.sort(key=lambda x: x[1]['fecha_hora'])
+        
+        id_partida_anterior = None
+        for jugador, jugada in log_total:
+            id_partida_actual = jugada['id_partida']
+            
+            if id_partida_anterior is not None and id_partida_actual != id_partida_anterior:
+                text_widget.insert(tk.END, "-------------------- FIN DE PARTIDA --------------------\n")
+            
+            text_widget.insert(tk.END, f"{jugada['fecha_hora']} - {jugada['mensaje']} | Cartas restantes: {jugada['cartas_restantes']}\n")
+            
+            id_partida_anterior = id_partida_actual
+    else:
+        text_widget.insert("1.0", f"No hay historial de partidas de {nombre} todavía.")
+    
+    text_widget.config(state=tk.DISABLED, spacing1=3, spacing3=3)
     
 def ranking(): #muestra el ranking de jugadores.
-    print("\n=== RANKING DE JUGADORES ===") #Título.
+    
     ranking_ordenado = sorted(jugadores_dic.items(), key=lambda x: x[1], reverse=True) #Ordena diccionario por puntaje descendente.
     ventana_reglas = tk.Toplevel(ventana)
     ventana_reglas.title("Reglas del Juego")
@@ -399,7 +441,7 @@ def ranking(): #muestra el ranking de jugadores.
   
     for i in range(len(ranking_ordenado)): #Recorre y muestra jugadores.
         nombre, puntos = ranking_ordenado[i]
-        rankingtxt = rankingtxt + str(i +  nombre + ":"+ puntos )
+        rankingtxt = rankingtxt + str(i) +  nombre + ":"+  str(puntos )
    
   
 def actualizar_puntuacion(nombre, puntos): #actualiza puntaje de un jugador.
@@ -434,7 +476,7 @@ def menu(historial, nombre, clave_pc_actual): #menú principal del juego.
                 ranking()
             elif opcion == 4:
                 if historial[nombre] or historial["PC"]:
-                    print("\n=== HISTORIAL DE JUGADAS ===") #Muestra historial de jugadas.
+                  #Muestra historial de jugadas.
 
                     log_total = []
                     for jugada in historial[nombre]:
@@ -588,17 +630,71 @@ def iniciar_juego(): #controla todo el flujo del juego.
                             efecto_pendiente = "REVERSA"
                 else:
                     efecto_pendiente=None
+def mostrarHistorial (nombre): 
+                clave_pc_actual = f"PC_VS_{nombre}" 
+                historial = cargar_historial_json()
+                if historial[nombre] or historial["PC"]:
+                    print("\n=== HISTORIAL DE JUGADAS ===") #Muestra historial de jugadas.    
+
+                    log_total = []
+                    for jugada in historial[nombre]:
+                        if 'id_partida' in jugada:
+                            log_total.append((nombre, jugada)) 
+                    for jugada in historial.get(clave_pc_actual,[]):
+                        if 'id_partida' in jugada:
+                            log_total.append(("PC", jugada))
+
+                    log_total.sort(key=lambda x: x[1]['fecha_hora'])
+
+                    id_partida_anterior = None
+                    for jugador, jugada in log_total:
+                        
+                        id_partida_actual = jugada['id_partida']
+                        
+                        if id_partida_anterior is not None and id_partida_actual != id_partida_anterior:
+                            print("-------------------- FIN DE PARTIDA --------------------")
+
+                        print(f"{jugada['fecha_hora']} - {jugada['mensaje']} | Cartas restantes: {jugada['cartas_restantes']}")
+                        
+                        id_partida_anterior = id_partida_actual
+                else:
+                    print(f"\nNo hay historial de partidas de {nombre} todavía.")
+                input("\nPresione Enter para continuar...")
+            
 
 
-            # Fin del juego: declara ganador y actualiza puntuación.
-            if len(mazoUsuario) == 0:
-                print("¡Ganaste!")
-                actualizar_puntuacion(nombre_usuario, 15)
-            else:
-                print("¡Ganó la computadora!")
-                actualizar_puntuacion(nombre_usuario, -5)
-            guardar_historial_json(historial)
-            input("\nPresione Enter para continuar...") #Pausa.
+def iniciar_juego_grafica():
+    nombre_usuario = str(simpledialog.askstring("Input", "¿Cómo te llamas?"))
+    historial_data = cargar_historial_json()
+    btn_iniciar = tk.Button(ventana, text="🎯 Iniciar Partida", font=("Arial", 14, "bold"), 
+                        bg=VERDECARTA, fg="black", width=25, height=2)
+    btn_iniciar.pack(pady=10)
+
+    btn_reglas = tk.Button(ventana, text="📖 Reglas del Juego", font=("Arial", 14, "bold"),
+                       bg=AZULCARTA, fg="white", width=25, height=2, command=reglas )
+    btn_reglas.pack(pady=10)
+
+    btn_ranking = tk.Button(ventana, text="🏆 Ranking", font=("Arial", 14, "bold"),
+                        bg=AZULCARTA, fg="white", width=25, height=2, command=ranking)
+    btn_ranking.pack(pady=10)
+
+    btn_historial = tk.Button(ventana, text="🕑 Historial", font=("Arial", 14, "bold"),
+                          bg=AZULCARTA, fg="white", width=25, height=2, command=lambda: historial(nombre_usuario))
+    btn_historial.pack(pady=10)
+
+    btn_salir = tk.Button(ventana, text="❌ Salir", font=("Arial", 14, "bold"),
+                      bg=ROJO, fg="white", width=25, height=2)
+    btn_salir.pack(pady=10)
+    '''
+    titulo = tk.Label(
+    ventana,
+    text="usuario: " + nombre_usuario,
+    font=("Arial", 20, "bold"),
+    bg=AMARILLO,
+    fg=ROJO
+    )
+    titulo.pack(pady=10)
+    '''
 
 #iniciar_juego() 
 # Crear ventana principal
@@ -609,10 +705,6 @@ ventana.configure(bg=AMARILLO)
 ruta_logo = os.path.join(os.path.dirname(__file__), "FIles", "Imgs", "logo.png")
 icono_pequeño = Image.open(ruta_logo).resize((16, 16))
 ventana.iconphoto(True, ImageTk.PhotoImage(icono_pequeño))
-
-
-nombre_input = simpledialog.askstring("Input", "¿Cómo te llamas?")
- 
 titulo = tk.Label(
     ventana,
     text="UNO - Algoritmos y estructuras de datos",
@@ -621,24 +713,12 @@ titulo = tk.Label(
     fg=ROJO
 )
 titulo.pack(pady=10)
+iniciar_juego_grafica()
 
-btn_iniciar = tk.Button(ventana, text="🎯 Iniciar Partida", font=("Arial", 14, "bold"), 
-                        bg=VERDECARTA, fg="black", width=25, height=2)
-btn_iniciar.pack(pady=10)
 
-btn_reglas = tk.Button(ventana, text="📖 Reglas del Juego", font=("Arial", 14, "bold"),
-                       bg=AZULCARTA, fg="white", width=25, height=2, command=reglas )
-btn_reglas.pack(pady=10)
-
-btn_ranking = tk.Button(ventana, text="🏆 Ranking", font=("Arial", 14, "bold"),
-                        bg=AZULCARTA, fg="white", width=25, height=2, command=ranking)
-btn_ranking.pack(pady=10)
-
-btn_historial = tk.Button(ventana, text="🕑 Historial", font=("Arial", 14, "bold"),
-                          bg=AZULCARTA, fg="white", width=25, height=2)
-btn_historial.pack(pady=10)
-
-btn_salir = tk.Button(ventana, text="❌ Salir", font=("Arial", 14, "bold"),
-                      bg=ROJO, fg="white", width=25, height=2)
-btn_salir.pack(pady=10)
 ventana.mainloop()
+
+ 
+
+
+
