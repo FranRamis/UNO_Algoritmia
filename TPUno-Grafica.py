@@ -897,22 +897,16 @@ def mostrarHistorial (nombre):
             
 
 
-def disparar_juego():
-    iniciar_juego()
-
 def iniciar_juego_grafica():
     global nombre_global
-    nombre_usuario = str(simpledialog.askstring("Input", "¿Cómo te llamas?"))
-    if not nombre_usuario or nombre_usuario.strip() == "" or nombre_usuario == "None":
-        ventana.destroy()
-        return
+    nombre_global = (str(simpledialog.askstring("Input", "¿Cómo te llamas?"))).strip().lower()
     
-    nombre_usuario = nombre_usuario.strip().lower()
-    nombre_global = nombre_usuario
+    nombre_usuario = nombre_global
+
     historial_data = cargar_historial_json()
     
     btn_iniciar = tk.Button(ventana, text="🎯 Iniciar Partida", font=("Arial", 14, "bold"), 
-                        bg=VERDECARTA, fg="black", width=25, height=2, command=disparar_juego)
+                        bg=VERDECARTA, fg="black", width=25, height=2, command=iniciar_juego)
     btn_iniciar.pack(pady=10)
 
     btn_reglas = tk.Button(ventana, text="📖 Reglas del Juego", font=("Arial", 14, "bold"),
@@ -928,7 +922,7 @@ def iniciar_juego_grafica():
     btn_historial.pack(pady=10)
 
     btn_salir = tk.Button(ventana, text="❌ Salir", font=("Arial", 14, "bold"),
-                      bg=ROJO, fg="white", width=25, height=2)
+                      bg=ROJO, fg="white", width=25, height=2, command=ventana.destroy)
     btn_salir.pack(pady=10)
     '''
     titulo = tk.Label(
