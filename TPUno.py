@@ -15,9 +15,14 @@ jugadores_dic = { #Diccionario jugadores_dic con jugadores y sus puntajes actual
 
 def leer_archivo_json(nombre_archivo):
     '''
-    Leer_archivo_json se encarga de la lactura de diversos archivos externos que se utilizan durante toda la ejecucion del codigo.
-    Utiliza el nombre del archivo que buscara en la carpeta Files.
-    '''
+    Carga los datos de un archivo JSON ubicado en la carpeta 'Files'.
+   
+    Parámetros:
+        nombre_archivo (str): Nombre del archivo a leer (ej: "ranking.json").
+   
+    Retorna:
+        dict: El diccionario con los datos del archivo, o un diccionario vacío si falla.
+    '''
     ruta = os.path.join(os.path.dirname(__file__), "FIles", nombre_archivo)
     try:
         with open(ruta, "r", encoding="utf-8") as archivo:
@@ -30,9 +35,15 @@ def leer_archivo_json(nombre_archivo):
 
 def guardar_archivo_json(nombre_archivo, datos):
     '''
-    guardar_arcivo_json se encarga de abrir o crear diversos archivos externos que se escribirar durante la ejecucion, 
-    y se encarga de guardarlos, utiliza el nomre del archivo que buscara en la carpeta Files.
-    '''
+    Guarda (escribe) el diccionario de datos en un archivo JSON en la carpeta 'Files'.
+   
+    Parámetros:
+        nombre_archivo (str): Nombre del archivo donde guardar los datos.
+        datos (dict): Diccionario a serializar y escribir en el archivo.
+   
+    Retorna:
+        None
+    '''
     ruta = os.path.join(os.path.dirname(__file__), "FIles", nombre_archivo)
     
     try:
@@ -46,8 +57,12 @@ jugadores_dic = leer_archivo_json("ranking.json")
 
 def Mazo_Uno(): #crea y devuelve el mazo completo de UNO.
     '''
-    Mazo_Uno se encarga de generar un mazo de cartas en una variable de tipo matriz, que contiene todas las cartas simples, y especiales; devolviendo asi una matriz o lista de listas.
-    '''
+    Genera y devuelve el mazo completo de cartas del juego UNO (108 cartas).
+    Incluye cartas numéricas, de acción (+2, Bloqueo, Reversa) y comodines (+4, Cambio de color).
+   
+    Retorna:
+        list: Una lista de listas, donde cada sublista es una carta [valor, color].
+    '''
     colores = ["ROJO", "AMARILLO", "VERDE", "AZUL"]
     mazo = []
 
@@ -70,9 +85,17 @@ def Mazo_Uno(): #crea y devuelve el mazo completo de UNO.
 # Nueva función de repartir con mazo de reparto y descarte
 def repartir(cant, mazo_reparto, mazo_descarte):
     '''
-    repartir se encarga de crear una lista de cartas segun los parametros que reibe, en este caso la cantidad de cartas que debe tener la lista, el mazo_reparto, que es de donde extraera 
-    los valores que apendea a la lista del reparto, y un mazo_descarte que es el que contenera las cartas ya repartdas o "usadas".
-    '''
+    Reparte una cantidad específica de cartas desde el mazo de reparto.
+    Si el mazo de reparto se queda vacío, recicla y baraja las cartas del mazo de descarte (manteniendo la última).
+   
+    Parámetros:
+        cant (int): Cantidad de cartas a repartir.
+        mazo_reparto (list): Lista de cartas disponibles para repartir.
+        mazo_descarte (list): Lista de cartas descartadas (para reciclar si es necesario).
+   
+    Retorna:
+        tuple: Una tupla que contiene (cartas repartidas, mazo_reparto actualizado, mazo_descarte actualizado).
+    '''
     lista = []
     for i in range(cant): #reparte cartas desde el mazo de reparto.
         if len(mazo_reparto) == 0:
@@ -92,6 +115,15 @@ def repartir(cant, mazo_reparto, mazo_descarte):
 
 # Función para mostrar el mazo
 def mostrarMazo(mazo): #muestra las cartas del mazo con colores.
+    '''
+    Imprime en consola las cartas de un mazo dado, utilizando códigos de color para distinguirlas.
+   
+    Parámetros:
+        mazo (list): La mano de cartas del jugador o cualquier lista de cartas.
+   
+    Retorna:
+        None: Solo realiza impresión en pantalla.
+    '''
     for i in range(len(mazo)): #Itera sobre todas las cartas.
         carta = mazo[i]
         numero, color = carta #Separa número y color de cada carta.
@@ -109,6 +141,16 @@ def mostrarMazo(mazo): #muestra las cartas del mazo con colores.
         print(f"{i+1} -> {color_print}{numero} {color}{Style.RESET_ALL}") #Imprime la carta en pantalla con su color correspondiente.
 
 def validarCarta(cartaEnJuego, cartaUsuario): #verifica si una carta es jugable.
+    '''
+    Comprueba si una carta del jugador se puede jugar legalmente sobre la carta en la pila de descarte.
+   
+    Parámetros:
+        cartaEnJuego (list): La carta actual en la pila [valor, color].
+        cartaUsuario (list): La carta que el jugador intenta jugar [valor, color].
+   
+    Retorna:
+        bool: True si la jugada es válida, False en caso contrario.
+    '''
     check = False #Inicializa check como falso.
     if cartaEnJuego[0] == cartaUsuario[0] or cartaEnJuego[1] == cartaUsuario[1]: #Valida por número o color.
         check = True  
@@ -120,6 +162,17 @@ def validarCarta(cartaEnJuego, cartaUsuario): #verifica si una carta es jugable.
 
 # función para selección con flechas
 def seleccionar_con_flechas(mazo, msgOpcion0, cartaEnJuego): #permite elegir carta con teclado.
+    '''
+    Permite al usuario seleccionar una carta de su mazo (mano) usando las teclas de flecha y Enter.
+   
+    Parámetros:
+        mazo (list): La mano de cartas del jugador.
+        msgOpcion0 (str): Mensaje para la opción 0 (Tomar carta/Pasar).
+        cartaEnJuego (list): La carta actual en juego para referencia visual.
+   
+    Retorna:
+        int: El índice (1-basado) de la carta seleccionada, o 0 si elige la opción 'Tomar carta/Pasar'.
+    '''
     indice = 0 #Índice de selección inicial.
     while True: #Loop infinito hasta que el jugador elija.
         os.system('cls') #Limpia pantalla.
@@ -168,6 +221,12 @@ def seleccionar_con_flechas(mazo, msgOpcion0, cartaEnJuego): #permite elegir car
             return 0
 
 def elegir_color():  # permite elegir color tras un comodín.
+    '''
+    Permite al jugador elegir un color después de jugar un comodín (Negro).
+   
+    Retorna:
+        str: El color elegido ("ROJO", "AZUL", "VERDE", o "AMARILLO").
+    '''
     colores = ["ROJO", "AMARILLO", "VERDE", "AZUL"]  # Lista de colores válidos.
     print("Elegí un color para el cambio:")  # Muestra mensaje.
     for i, col in enumerate(colores):  # Muestra colores numerados.
@@ -185,6 +244,16 @@ def elegir_color():  # permite elegir color tras un comodín.
 
         
 def elegirColorPc(mazo): #decide color óptimo para la PC.
+    '''
+    Determina el color óptimo para la PC tras jugar un comodín, eligiendo el color
+    que la PC tiene en mayor cantidad en su mano. Si hay empate o solo tiene negras, elige uno al azar.
+   
+    Parámetros:
+        mazo (list): La mano de cartas de la PC.
+   
+    Retorna:
+        str: El color elegido.
+    '''
     colores_validos = ["ROJO", "AZUL", "VERDE", "AMARILLO"] #Lista de colores válidos.
     conteo = {color: 0 for color in colores_validos} #Crea conteo de colores.
     conteo["NEGRO"] = 0 
@@ -207,6 +276,25 @@ def elegirColorPc(mazo): #decide color óptimo para la PC.
 
 
 def turnoUsuario(mazoUsuario, mazo_reparto, mazo_descarte, cartaEnJuego, historial, nombre, id_partida): #lógica del turno del jugador.
+    '''
+    Ejecuta la lógica completa de un turno para un jugador humano.
+    Permite jugar una carta válida o tomar una carta del mazo.
+   
+    Parámetros:
+        mazoUsuario (list): Mano actual del jugador.
+        mazo_reparto (list): Mazo de donde se toman cartas.
+        mazo_descarte (list): Pila de cartas descartadas.
+        cartaEnJuego (list): La última carta jugada.
+        historial (dict): Diccionario global donde se registran las jugadas.
+        nombre (str): Nombre del jugador (clave para el historial).
+        id_partida (str): Identificador único de la partida actual.
+   
+    Modifica:
+        mazoUsuario, mazo_reparto, mazo_descarte, cartaEnJuego y historial.
+   
+    Retorna:
+        tuple: (cartaEnJuego, mazoUsuario, mazo_reparto, mazo_descarte, msgOpcion0) actualizados.
+    '''
     salir = False #Variables de control de turno.
     tomoUnaCarta = False
     opcion = -1
@@ -266,6 +354,25 @@ def turnoUsuario(mazoUsuario, mazo_reparto, mazo_descarte, cartaEnJuego, histori
 
 
 def turnoPC(mazoPC, mazo_reparto, mazo_descarte, cartaEnJuego, historial, clave_pc_actual, id_partida): #lógica del turno de la computadora.
+    '''
+    Ejecuta la lógica completa de un turno para la computadora (PC).
+    Juega la primera carta válida que encuentra o toma una carta del mazo.
+   
+    Parámetros:
+        mazoPC (list): Mano actual de la PC.
+        mazo_reparto (list): Mazo de donde se toman cartas.
+        mazo_descarte (list): Pila de cartas descartadas.
+        cartaEnJuego (list): La última carta jugada.
+        historial (dict): Diccionario global donde se registran las jugadas.
+        clave_pc_actual (str): Clave única para el historial de la PC (ej: "PC_VS_nombre").
+        id_partida (str): Identificador único de la partida actual.
+   
+    Modifica:
+        mazoPC, mazo_reparto, mazo_descarte, cartaEnJuego y historial.
+   
+    Retorna:
+        tuple: (cartaEnJuego, mazoPC, mazo_reparto, mazo_descarte) actualizados.
+    '''
     print("\nTurno de la computadora...") #Mensaje de turno PC.
     jugada_valida = False #Bandera jugada válida.
     i = 0
@@ -328,6 +435,12 @@ def turnoPC(mazoPC, mazo_reparto, mazo_descarte, cartaEnJuego, historial, clave_
     return cartaEnJuego, mazoPC, mazo_reparto, mazo_descarte
 
 def registrar_usuario(): #pide nombre del jugador.
+    '''
+    Pide y valida el nombre del jugador principal.
+   
+    Retorna:
+        str: El nombre del usuario en minúsculas y sin espacios iniciales/finales.
+    '''
     print("\n=== REGISTRO DE USUARIO ===") #Muestra mensaje.
     nombre = input("Ingrese su nombre: ") #Pide nombre.
     while len(nombre.strip()) == 0: #Valida que no esté vacío.
@@ -335,7 +448,16 @@ def registrar_usuario(): #pide nombre del jugador.
         nombre = input("Ingrese su nombre: ")
     return nombre.strip().lower() #Devuelve nombre.
 def registrar_oponente(nombre_primer_jugador):
-    # Pide nombre del oponente (jugador 2) — no pide el nombre del jugador 1 porque ya está logueado.
+    '''
+    Pide y valida el nombre del oponente (Jugador 2) para el modo 1v1.
+    Asegura que el nombre no esté vacío y que no sea el mismo que el Jugador 1.
+   
+    Parámetros:
+        nombre_primer_jugador (str): El nombre del Jugador 1 (para evitar duplicados).
+   
+    Retorna:
+        str: El nombre del oponente en minúsculas.
+    '''
     print("\n=== REGISTRO/SELECCIÓN DE OPONENTE ===")
     while True:
         nombre2 = input("Ingrese el nombre del oponente: ").strip().lower()
@@ -348,6 +470,12 @@ def registrar_oponente(nombre_primer_jugador):
         return nombre2
 
 def reglas(): #imprime las reglas básicas del UNO.
+    '''
+    Muestra las reglas del juego leyendo el contenido del archivo 'FIles/reglas.txt'.
+   
+    Retorna:
+        None: Solo realiza impresión en pantalla.
+    '''
     try: 
         reglas = open("FIles/reglas.txt", "r") #Abre archivo de reglas.
         for linea in reglas:
@@ -359,6 +487,13 @@ def reglas(): #imprime las reglas básicas del UNO.
         input("\nPresione Enter para continuar...")
     
 def ranking(): #muestra el ranking de jugadores.
+    '''
+    Imprime el ranking de jugadores ordenados por puntuación de forma descendente.
+    Utiliza la variable global jugadores_dic.
+   
+    Retorna:
+        None: Solo realiza impresión en pantalla.
+    '''
     print("\n=== RANKING DE JUGADORES ===") #Título.
     ranking_ordenado = sorted(jugadores_dic.items(), key=lambda x: x[1], reverse=True) #Ordena diccionario por puntaje descendente.
     for i in range(len(ranking_ordenado)): #Recorre y muestra jugadores.
@@ -367,6 +502,20 @@ def ranking(): #muestra el ranking de jugadores.
     input("\nPresione Enter para continuar...") #Pausa.
 
 def actualizar_puntuacion(nombre, puntos): #actualiza puntaje de un jugador.
+    '''
+    Actualiza la puntuación de un jugador sumando o estableciendo nuevos puntos.
+    Guarda el ranking actualizado en "ranking.json".
+   
+    Parámetros:
+        nombre (str): Nombre del jugador a actualizar.
+        puntos (int): Puntos a sumar (puede ser positivo o negativo).
+   
+    Modifica:
+        El diccionario global jugadores_dic y el archivo ranking.json.
+   
+    Retorna:
+        None
+    '''
     nombre_lower = nombre.lower() 
     try:
         jugadores_dic[nombre_lower] += puntos 
@@ -375,6 +524,19 @@ def actualizar_puntuacion(nombre, puntos): #actualiza puntaje de un jugador.
     guardar_archivo_json("ranking.json", jugadores_dic)
 
 def historial_partidas(historial, nombre, clave_pc_actual):
+    '''
+    Muestra el historial completo de jugadas de las partidas del jugador principal.
+    Recolecta y ordena cronológicamente las jugadas del jugador y de sus oponentes (PC o J2)
+    que pertenecen a las mismas partidas.
+   
+    Parámetros:
+        historial (dict): Diccionario cargado desde Logs.json con todos los registros de juego.
+        nombre (str): Nombre del jugador principal.
+        clave_pc_actual (str): Clave usada para el historial del modo VS PC (ej: "PC_VS_nombre").
+   
+    Retorna:
+        None: Solo realiza impresión en pantalla.
+    '''
     if historial.get(nombre) or historial.get(clave_pc_actual):
         print("\n=== HISTORIAL DE JUGADAS ===")
         log_total = []
@@ -401,6 +563,17 @@ def historial_partidas(historial, nombre, clave_pc_actual):
 
 
 def menu(historial, nombre, clave_pc_actual): #menú principal del juego.
+    '''
+    Muestra el menú principal del juego y maneja la navegación.
+   
+    Parámetros:
+        historial (dict): Diccionario de historial de partidas.
+        nombre (str): Nombre del jugador actual.
+        clave_pc_actual (str): Clave para el historial VS PC.
+   
+    Retorna:
+        int/bool: 1 (vs PC), 2 (1v1), o False (Salir del juego).
+    '''
     if nombre not in historial:
         historial[nombre] = []
     while True:
@@ -453,6 +626,19 @@ def menu(historial, nombre, clave_pc_actual): #menú principal del juego.
 
 # ================== Juego principal ==================
 def iniciar_partida_vs_pc(nombre_usuario, historial):
+    '''
+    Inicializa y ejecuta una partida de UNO en el modo Jugador vs PC.
+   
+    Parámetros:
+        nombre_usuario (str): Nombre del jugador humano.
+        historial (dict): Diccionario para registrar el log de jugadas.
+   
+    Modifica:
+        Actualiza el historial con las jugadas y el ranking con el resultado final.
+   
+    Retorna:
+        None
+    '''
     clave_pc_actual = f"PC_VS_{nombre_usuario}"
     id_partida = datetime.now().strftime("%Y%m%d%H%M%S")
     if nombre_usuario not in historial:
@@ -576,6 +762,19 @@ def iniciar_partida_vs_pc(nombre_usuario, historial):
     input("\nPresione Enter para continuar...")
 
 def iniciar_partida_1v1(nombre_usuario, historial):
+    '''
+    Inicializa y ejecuta una partida de UNO en el modo Jugador vs Jugador (1v1).
+   
+    Parámetros:
+        nombre_usuario (str): Nombre del Jugador 1.
+        historial (dict): Diccionario para registrar el log de jugadas.
+   
+    Modifica:
+        Actualiza el historial con las jugadas y el ranking con el resultado final.
+   
+    Retorna:
+        None
+    '''
     jugador1 = nombre_usuario
     jugador2 = registrar_oponente(nombre_usuario)
 
@@ -706,6 +905,13 @@ def iniciar_partida_1v1(nombre_usuario, historial):
 
 # ================== Juego principal ==================
 def iniciar_juego():
+    '''
+    Función principal que inicializa el juego: registra al usuario, carga el historial
+    y entra en el bucle del menú principal.
+   
+    Retorna:
+        None
+    '''
     nombre_usuario = registrar_usuario()
     print(f"\n¡Bienvenido {nombre_usuario}!")
     input("Presione Enter para continuar...")
