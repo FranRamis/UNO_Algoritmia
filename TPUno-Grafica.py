@@ -38,10 +38,6 @@ def guardar_archivo_json(nombre_archivo, datos):
     except Exception as e:
         print(f"Error inesperado al guardar '{nombre_archivo}': {e}")
 
-
-
-
-
 def leer_archivo_json(nombre_archivo):
     ruta = os.path.join(os.path.dirname(__file__), "FIles", nombre_archivo)
     
@@ -85,9 +81,6 @@ def cargar_historial_json():
             return data
         except json.JSONDecodeError:
             return {"PC": []}
-
-
-
 
 def Mazo_Uno(): #crea y devuelve el mazo completo de UNO.
     colores = ["ROJO", "AMARILLO", "VERDE", "AZUL"]
@@ -394,19 +387,18 @@ def historial(nombre):
         text_widget.insert("1.0", "=== HISTORIAL DE JUGADAS ===\n\n")
         
         log_total = []
-        for jugada in historial_data.get(nombre, []):
+        for jugada in historial.get(nombre, []):
             if 'id_partida' in jugada:
                 log_total.append((nombre, jugada))
-        for jugada in historial_data.get(clave_pc, []):
-            if 'id_partida' in jugada:
-                log_total.append(("PC", jugada))
-        
-        log_total.sort(key=lambda x: x[1]['fecha_hora'])
-        
+        for clave_oponente, jugadas in historial.items():
+            if clave_oponente != nombre:
+                for jugada in jugadas:
+                    if 'id_partida' in jugada and jugada['id_partida'] in [j['id_partida'] for j in historial.get(nombre, [])]:
+                        log_total.append((clave_oponente, jugada))
+        log_total.sort(key=lambda x: x[1]['fecha_hora']) 
         id_partida_anterior = None
         for jugador, jugada in log_total:
             id_partida_actual = jugada['id_partida']
-            
             if id_partida_anterior is not None and id_partida_actual != id_partida_anterior:
                 text_widget.insert(tk.END, "-------------------- FIN DE PARTIDA --------------------\n")
             
@@ -443,7 +435,6 @@ def ranking(): #muestra el ranking de jugadores.
         nombre, puntos = ranking_ordenado[i]
         rankingtxt = rankingtxt + str(i) +  nombre + ":"+  str(puntos )
    
-  
 def actualizar_puntuacion(nombre, puntos): #actualiza puntaje de un jugador.
     nombre_lower = nombre.lower() 
     try:
@@ -451,8 +442,6 @@ def actualizar_puntuacion(nombre, puntos): #actualiza puntaje de un jugador.
     except KeyError:
         jugadores_dic[nombre_lower] = puntos
     guardar_archivo_json("ranking.json", jugadores_dic)
-
-
 
 def menu(historial, nombre, clave_pc_actual): #menú principal del juego.
     if nombre not in historial:
@@ -512,8 +501,6 @@ def menu(historial, nombre, clave_pc_actual): #menú principal del juego.
         except ValueError:
             print("\nSolo se permiten numero! Por favor, ingrese un número del 1 al 5.")
             input("Presione Enter para continuar...")
-
-
 
 def actualizar_interfaz(estado_juego):
     lbl_info = estado_juego["lbl_info"]
@@ -864,6 +851,7 @@ def iniciar_juego():
     estado_juego["btn_tomar"] = btn_tomar
     
     actualizar_interfaz(estado_juego)
+
 def mostrarHistorial (nombre): 
                 clave_pc_actual = f"PC_VS_{nombre}" 
                 historial = cargar_historial_json()
@@ -895,8 +883,6 @@ def mostrarHistorial (nombre):
                     print(f"\nNo hay historial de partidas de {nombre} todavía.")
                 input("\nPresione Enter para continuar...")
             
-
-
 def iniciar_juego_grafica():
     global nombre_global
     nombre_global = (str(simpledialog.askstring("Input", "¿Cómo te llamas?"))).strip().lower()
