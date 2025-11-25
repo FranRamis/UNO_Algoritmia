@@ -377,26 +377,22 @@ def actualizar_puntuacion(nombre, puntos): #actualiza puntaje de un jugador.
 def historial_partidas(historial, nombre, clave_pc_actual):
     if historial.get(nombre) or historial.get(clave_pc_actual):
         print("\n=== HISTORIAL DE JUGADAS ===")
-        
         log_total = []
         for jugada in historial.get(nombre, []):
             if 'id_partida' in jugada:
                 log_total.append((nombre, jugada))
-        for jugada in historial.get(clave_pc_actual, []):
-            if 'id_partida' in jugada:
-                log_total.append(("PC", jugada))
-        
-        log_total.sort(key=lambda x: x[1]['fecha_hora'])
-        
+        for clave_oponente, jugadas in historial.items():
+            if clave_oponente != nombre:
+                for jugada in jugadas:
+                    if 'id_partida' in jugada and jugada['id_partida'] in [j['id_partida'] for j in historial.get(nombre, [])]:
+                        log_total.append((clave_oponente, jugada))
+        log_total.sort(key=lambda x: x[1]['fecha_hora']) 
         id_partida_anterior = None
         for jugador, jugada in log_total:
             id_partida_actual = jugada['id_partida']
-            
             if id_partida_anterior is not None and id_partida_actual != id_partida_anterior:
                 print("-------------------- FIN DE PARTIDA --------------------")
-            
             print(f"{jugada['fecha_hora']} - {jugada['mensaje']} | Cartas restantes: {jugada['cartas_restantes']}")
-            
             id_partida_anterior = id_partida_actual
     else:
         print(f"\nNo hay historial de partidas de {nombre} todavía.")
