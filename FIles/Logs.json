@@ -1415,6 +1415,171 @@
             "mensaje": "vera jugó 6 AZUL",
             "fecha_hora": "2025-11-25 13:45:22",
             "id_partida": "20251125134447"
+        },
+        {
+            "turno": 34,
+            "carta": [
+                4,
+                "VERDE"
+            ],
+            "cartas_restantes": 6,
+            "mensaje": "vera jugó 4 VERDE",
+            "fecha_hora": "2025-11-25 13:55:32",
+            "id_partida": "20251125135529"
+        },
+        {
+            "turno": 35,
+            "carta": [
+                3,
+                "VERDE"
+            ],
+            "cartas_restantes": 6,
+            "mensaje": "vera jugó 3 VERDE",
+            "fecha_hora": "2025-11-25 13:55:39",
+            "id_partida": "20251125135529"
+        },
+        {
+            "turno": 36,
+            "carta": [
+                4,
+                "AZUL"
+            ],
+            "cartas_restantes": 5,
+            "mensaje": "vera jugó 4 AZUL",
+            "fecha_hora": "2025-11-25 13:55:44",
+            "id_partida": "20251125135529"
+        },
+        {
+            "turno": 37,
+            "carta": [
+                "BLOQUEO",
+                "AZUL"
+            ],
+            "cartas_restantes": 4,
+            "mensaje": "vera jugó BLOQUEO AZUL",
+            "fecha_hora": "2025-11-25 13:55:46",
+            "id_partida": "20251125135529"
+        },
+        {
+            "turno": 38,
+            "carta": [
+                1,
+                "AZUL"
+            ],
+            "cartas_restantes": 3,
+            "mensaje": "vera jugó 1 AZUL",
+            "fecha_hora": "2025-11-25 13:55:48",
+            "id_partida": "20251125135529"
+        },
+        {
+            "turno": 39,
+            "carta": [
+                0,
+                "ROJO"
+            ],
+            "cartas_restantes": 2,
+            "mensaje": "vera jugó 0 ROJO",
+            "fecha_hora": "2025-11-25 13:55:50",
+            "id_partida": "20251125135529"
+        },
+        {
+            "turno": 40,
+            "carta": [
+                8,
+                "ROJO"
+            ],
+            "cartas_restantes": 1,
+            "mensaje": "vera jugó 8 ROJO",
+            "fecha_hora": "2025-11-25 13:55:52",
+            "id_partida": "20251125135529"
+        },
+        {
+            "turno": 41,
+            "carta": [
+                0,
+                "VERDE"
+            ],
+            "cartas_restantes": 3,
+            "mensaje": "vera jugó 0 VERDE",
+            "fecha_hora": "2025-11-25 13:56:05",
+            "id_partida": "20251125135529"
+        },
+        {
+            "turno": 42,
+            "carta": [
+                5,
+                "AMARILLO"
+            ],
+            "cartas_restantes": 5,
+            "mensaje": "vera jugó 5 AMARILLO",
+            "fecha_hora": "2025-11-25 13:56:20",
+            "id_partida": "20251125135529"
+        },
+        {
+            "turno": 43,
+            "carta": [
+                1,
+                "AMARILLO"
+            ],
+            "cartas_restantes": 4,
+            "mensaje": "vera jugó 1 AMARILLO",
+            "fecha_hora": "2025-11-25 13:56:22",
+            "id_partida": "20251125135529"
+        },
+        {
+            "turno": 44,
+            "carta": [
+                3,
+                "AMARILLO"
+            ],
+            "cartas_restantes": 3,
+            "mensaje": "vera jugó 3 AMARILLO",
+            "fecha_hora": "2025-11-25 13:56:25",
+            "id_partida": "20251125135529"
+        },
+        {
+            "turno": 45,
+            "carta": [
+                3,
+                "AMARILLO"
+            ],
+            "cartas_restantes": 2,
+            "mensaje": "vera jugó 3 AMARILLO",
+            "fecha_hora": "2025-11-25 13:56:29",
+            "id_partida": "20251125135529"
+        },
+        {
+            "turno": 46,
+            "carta": [
+                "REVERSA",
+                "AMARILLO"
+            ],
+            "cartas_restantes": 1,
+            "mensaje": "vera jugó REVERSA AMARILLO",
+            "fecha_hora": "2025-11-25 13:56:33",
+            "id_partida": "20251125135529"
+        },
+        {
+            "turno": 47,
+            "carta": [
+                "+4",
+                "ROJO"
+            ],
+            "cartas_restantes": 1,
+            "mensaje": "vera jugó +4 ROJO",
+            "fecha_hora": "2025-11-25 13:56:35",
+            "id_partida": "20251125135529"
+        },
+        {
+            "turno": 48,
+            "carta": [
+                5,
+                "ROJO"
+            ],
+            "cartas_restantes": 0,
+            "mensaje": "vera jugó 5 ROJO",
+            "fecha_hora": "2025-11-25 13:56:39",
+            "id_partida": "20251125135529"
         }
     ],
     "PC_VS_vera": [
@@ -2940,6 +3105,162 @@
             "mensaje": "PC jugó 5 AZUL",
             "fecha_hora": "2025-11-24 21:45:50",
             "id_partida": "20251124214537"
+        }
+    ],
+    "juan": [
+        {
+            "turno": 1,
+            "carta": [
+                6,
+                "VERDE"
+            ],
+            "cartas_restantes": 6,
+            "mensaje": "juan jugó 6 VERDE",
+            "fecha_hora": "2025-11-25 13:55:34",
+            "id_partida": "20251125135529"
+        },
+        {
+            "turno": 2,
+            "carta": [
+                3,
+                "AZUL"
+            ],
+            "cartas_restantes": 5,
+            "mensaje": "juan jugó 3 AZUL",
+            "fecha_hora": "2025-11-25 13:55:42",
+            "id_partida": "20251125135529"
+        },
+        {
+            "turno": 3,
+            "carta": [
+                7,
+                "AZUL"
+            ],
+            "cartas_restantes": 4,
+            "mensaje": "juan jugó 7 AZUL",
+            "fecha_hora": "2025-11-25 13:55:45",
+            "id_partida": "20251125135529"
+        },
+        {
+            "turno": 4,
+            "carta": [
+                0,
+                "AZUL"
+            ],
+            "cartas_restantes": 3,
+            "mensaje": "juan jugó 0 AZUL",
+            "fecha_hora": "2025-11-25 13:55:49",
+            "id_partida": "20251125135529"
+        },
+        {
+            "turno": 5,
+            "carta": [
+                2,
+                "ROJO"
+            ],
+            "cartas_restantes": 2,
+            "mensaje": "juan jugó 2 ROJO",
+            "fecha_hora": "2025-11-25 13:55:51",
+            "id_partida": "20251125135529"
+        },
+        {
+            "turno": 6,
+            "carta": [
+                8,
+                "VERDE"
+            ],
+            "cartas_restantes": 2,
+            "mensaje": "juan jugó 8 VERDE",
+            "fecha_hora": "2025-11-25 13:55:54",
+            "id_partida": "20251125135529"
+        },
+        {
+            "turno": 7,
+            "carta": [
+                "REVERSA",
+                "VERDE"
+            ],
+            "cartas_restantes": 1,
+            "mensaje": "juan jugó REVERSA VERDE",
+            "fecha_hora": "2025-11-25 13:55:57",
+            "id_partida": "20251125135529"
+        },
+        {
+            "turno": 8,
+            "carta": [
+                9,
+                "VERDE"
+            ],
+            "cartas_restantes": 1,
+            "mensaje": "juan jugó 9 VERDE",
+            "fecha_hora": "2025-11-25 13:55:59",
+            "id_partida": "20251125135529"
+        },
+        {
+            "turno": 9,
+            "carta": [
+                0,
+                "AZUL"
+            ],
+            "cartas_restantes": 3,
+            "mensaje": "juan jugó 0 AZUL",
+            "fecha_hora": "2025-11-25 13:56:10",
+            "id_partida": "20251125135529"
+        },
+        {
+            "turno": 10,
+            "carta": [
+                7,
+                "AZUL"
+            ],
+            "cartas_restantes": 2,
+            "mensaje": "juan jugó 7 AZUL",
+            "fecha_hora": "2025-11-25 13:56:13",
+            "id_partida": "20251125135529"
+        },
+        {
+            "turno": 11,
+            "carta": [
+                5,
+                "AZUL"
+            ],
+            "cartas_restantes": 2,
+            "mensaje": "juan jugó 5 AZUL",
+            "fecha_hora": "2025-11-25 13:56:18",
+            "id_partida": "20251125135529"
+        },
+        {
+            "turno": 12,
+            "carta": [
+                1,
+                "AMARILLO"
+            ],
+            "cartas_restantes": 1,
+            "mensaje": "juan jugó 1 AMARILLO",
+            "fecha_hora": "2025-11-25 13:56:21",
+            "id_partida": "20251125135529"
+        },
+        {
+            "turno": 13,
+            "carta": [
+                3,
+                "AZUL"
+            ],
+            "cartas_restantes": 1,
+            "mensaje": "juan jugó 3 AZUL",
+            "fecha_hora": "2025-11-25 13:56:27",
+            "id_partida": "20251125135529"
+        },
+        {
+            "turno": 14,
+            "carta": [
+                9,
+                "AMARILLO"
+            ],
+            "cartas_restantes": 1,
+            "mensaje": "juan jugó 9 AMARILLO",
+            "fecha_hora": "2025-11-25 13:56:31",
+            "id_partida": "20251125135529"
         }
     ]
 }

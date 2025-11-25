@@ -1,6 +1,6 @@
 {
     "thomas": 70,
-    "vera": 90,
+    "vera": 140,
     "fran": 170,
     "augus": 55,
     "julia": 99999,
@@ -8,5 +8,6 @@
     "nuevo_jugador": 20,
     "prubea": 80,
     "asd": -5,
-    "donacimento": -5
+    "donacimento": -5,
+    "juan": -5
 }
