@@ -606,11 +606,13 @@ def iniciar_app():
     estilo_btn = {"font": ("Arial", 12, "bold"), "width": 25, "height": 2, "bd": 3, "relief": "raised"}
     
     def btn_vs_pc():
+        ventana_principal.withdraw()
         PartidaGUI(ventana_principal, nombre_global, "VS_PC")
         
     def btn_1v1():
         oponente = simpledialog.askstring("1v1", "Nombre del Oponente:")
         if oponente and oponente.strip().lower() != nombre_global:
+            ventana_principal.withdraw()
             PartidaGUI(ventana_principal, nombre_global, "1V1", oponente.strip().lower())
         else:
             messagebox.showerror("Error", "Nombre inválido o igual al jugador 1")
