@@ -612,7 +612,6 @@ def iniciar_app():
     def btn_1v1():
         oponente = simpledialog.askstring("1v1", "Nombre del Oponente:")
         if oponente and oponente.strip().lower() != nombre_global:
-            ventana_principal.withdraw()
             PartidaGUI(ventana_principal, nombre_global, "1V1", oponente.strip().lower())
         else:
             messagebox.showerror("Error", "Nombre inválido o igual al jugador 1")

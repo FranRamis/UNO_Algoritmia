@@ -606,6 +606,78 @@
             "fecha_hora": "2025-11-25 14:46:24",
             "mensaje": "fran jugó 9 AMARILLO",
             "cartas_restantes": 1
+        },
+        {
+            "id_partida": "20251126185121",
+            "fecha_hora": "2025-11-26 18:51:27",
+            "mensaje": "fran jugó 1 VERDE",
+            "cartas_restantes": 6
+        },
+        {
+            "id_partida": "20251126185121",
+            "fecha_hora": "2025-11-26 18:51:36",
+            "mensaje": "fran jugó 1 VERDE",
+            "cartas_restantes": 5
+        },
+        {
+            "id_partida": "20251126185121",
+            "fecha_hora": "2025-11-26 18:51:59",
+            "mensaje": "fran jugó 6 AZUL",
+            "cartas_restantes": 6
+        },
+        {
+            "id_partida": "20251126185121",
+            "fecha_hora": "2025-11-26 18:52:07",
+            "mensaje": "fran jugó 3 AZUL",
+            "cartas_restantes": 5
+        },
+        {
+            "id_partida": "20251126185121",
+            "fecha_hora": "2025-11-26 18:52:14",
+            "mensaje": "fran jugó 5 AZUL",
+            "cartas_restantes": 4
+        },
+        {
+            "id_partida": "20251126185121",
+            "fecha_hora": "2025-11-26 18:53:13",
+            "mensaje": "fran jugó +4 ROJO",
+            "cartas_restantes": 5
+        },
+        {
+            "id_partida": "20251126185121",
+            "fecha_hora": "2025-11-26 18:53:16",
+            "mensaje": "fran jugó 1 ROJO",
+            "cartas_restantes": 4
+        },
+        {
+            "id_partida": "20251126185121",
+            "fecha_hora": "2025-11-26 18:53:21",
+            "mensaje": "fran jugó +2 ROJO",
+            "cartas_restantes": 3
+        },
+        {
+            "id_partida": "20251126185121",
+            "fecha_hora": "2025-11-26 18:53:23",
+            "mensaje": "fran jugó +2 VERDE",
+            "cartas_restantes": 2
+        },
+        {
+            "id_partida": "20251126185121",
+            "fecha_hora": "2025-11-26 18:53:26",
+            "mensaje": "fran jugó 0 VERDE",
+            "cartas_restantes": 1
+        },
+        {
+            "id_partida": "20251126185121",
+            "fecha_hora": "2025-11-26 18:53:43",
+            "mensaje": "fran jugó +4 AMARILLO",
+            "cartas_restantes": 1
+        },
+        {
+            "id_partida": "20251126185121",
+            "fecha_hora": "2025-11-26 18:53:46",
+            "mensaje": "fran jugó 3 AMARILLO",
+            "cartas_restantes": 0
         }
     ],
     "PC_VS_fran": [
@@ -4133,6 +4205,72 @@
             "fecha_hora": "2025-11-25 14:46:47",
             "mensaje": "marce jugó 7 AZUL",
             "cartas_restantes": 0
+        },
+        {
+            "id_partida": "20251126185121",
+            "fecha_hora": "2025-11-26 18:51:31",
+            "mensaje": "marce jugó 9 VERDE",
+            "cartas_restantes": 6
+        },
+        {
+            "id_partida": "20251126185121",
+            "fecha_hora": "2025-11-26 18:51:41",
+            "mensaje": "marce jugó BLOQUEO VERDE",
+            "cartas_restantes": 5
+        },
+        {
+            "id_partida": "20251126185121",
+            "fecha_hora": "2025-11-26 18:51:44",
+            "mensaje": "marce jugó +2 VERDE",
+            "cartas_restantes": 4
+        },
+        {
+            "id_partida": "20251126185121",
+            "fecha_hora": "2025-11-26 18:51:54",
+            "mensaje": "marce jugó CAMBIO_COLOR AZUL",
+            "cartas_restantes": 3
+        },
+        {
+            "id_partida": "20251126185121",
+            "fecha_hora": "2025-11-26 18:52:02",
+            "mensaje": "marce jugó 8 AZUL",
+            "cartas_restantes": 2
+        },
+        {
+            "id_partida": "20251126185121",
+            "fecha_hora": "2025-11-26 18:52:10",
+            "mensaje": "marce jugó 2 AZUL",
+            "cartas_restantes": 1
+        },
+        {
+            "id_partida": "20251126185121",
+            "fecha_hora": "2025-11-26 18:53:19",
+            "mensaje": "marce jugó 2 ROJO",
+            "cartas_restantes": 7
+        },
+        {
+            "id_partida": "20251126185121",
+            "fecha_hora": "2025-11-26 18:53:29",
+            "mensaje": "marce jugó REVERSA VERDE",
+            "cartas_restantes": 10
+        },
+        {
+            "id_partida": "20251126185121",
+            "fecha_hora": "2025-11-26 18:53:32",
+            "mensaje": "marce jugó REVERSA AZUL",
+            "cartas_restantes": 9
+        },
+        {
+            "id_partida": "20251126185121",
+            "fecha_hora": "2025-11-26 18:53:34",
+            "mensaje": "marce jugó BLOQUEO AZUL",
+            "cartas_restantes": 8
+        },
+        {
+            "id_partida": "20251126185121",
+            "fecha_hora": "2025-11-26 18:53:36",
+            "mensaje": "marce jugó 9 AZUL",
+            "cartas_restantes": 7
         }
     ]
 }
